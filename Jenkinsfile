@@ -2,22 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                // Your build steps go here
-                echo 'Building...'
+                // Checkout your source code from version control
+                checkout scm
             }
         }
-        stage('Test') {
+
+        stage('Install dependencies') {
             steps {
-                // Your test steps go here
-                echo 'Testing...'
+                // Install Python dependencies using a virtual environment
+                script {
+                    sh 'python -m venv venv'
+                    sh 'source venv/bin/activate && pip install -r requirements.txt'
+                }
             }
         }
-        stage('Deploy') {
+
+        stage('Run tests') {
             steps {
-                // Your deployment steps go here
-                echo 'Deploying...'
+                // Run your Python unit tests
+                script {
+                    sh 'source venv/bin/activate && python -m unittest discover -s tests -p "test_*.py"'
+                }
             }
         }
     }
