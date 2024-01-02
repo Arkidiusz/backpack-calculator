@@ -10,7 +10,3 @@ def test_add_numbers():
 
     # Assert
     assert result == 5
-
-def test_fail_test():
-    #Assert
-    assert 1 == 2
