@@ -1,14 +1,10 @@
 pipeline {
-    agent {
-        docker {
-            image 'python'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout your source code from version control
+                // Checkout source code from version control
                 checkout scm
             }
         }
@@ -25,7 +21,7 @@ pipeline {
 
         stage('Run tests') {
             steps {
-                // Run your Python unit tests
+                // Run Python unit tests
                 script {
                     sh 'source venv/bin/activate && python -m unittest discover -s tests -p "test_*.py"'
                 }
