@@ -1,4 +1,4 @@
-from main import add_numbers
+from src.main import add_numbers
 
 def test_add_numbers():
     # Arrange
@@ -11,5 +11,6 @@ def test_add_numbers():
     # Assert
     assert result == 5
 
-def fail test():
+def test_fail_test():
+    #Assert
     assert 1 == 2
