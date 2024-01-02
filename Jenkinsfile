@@ -1,20 +1,15 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python'
+        }
+    }
 
     stages {
         stage('Checkout') {
             steps {
                 // Checkout your source code from version control
                 checkout scm
-            }
-        }
-
-        stage('Install Python') {
-            steps {
-                script {
-                    // Install Python
-                    sh 'sudo apt-get update && sudo apt-get install -y python3'
-                }
             }
         }
 
