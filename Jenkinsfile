@@ -9,6 +9,15 @@ pipeline {
             }
         }
 
+        stage('Install Python') {
+            steps {
+                script {
+                    // Install Python
+                    sh 'apt-get update && apt-get install -y python3'
+                }
+            }
+        }
+
         stage('Install dependencies') {
             steps {
                 // Install Python dependencies using a virtual environment
