@@ -1,4 +1,4 @@
-from items import Item
+from src.items import Item
 
 def add_numbers(a, b):
     "This is just for testing - to be removed"
