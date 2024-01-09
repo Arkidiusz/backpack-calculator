@@ -1,13 +1,4 @@
-class Item:
-    """Item represents all properties of an item used to evaluate its value contribution to a backpack
-
-    Attributes:
-        name: name of item
-        tags: A list of tags of item such as "food" or "bag"
-    """
-    def __init__(cls, name: str, tags: list[str]) -> None:
-        cls.name = name
-        cls.tags = tags
+from src.items import Item
 
 def add_numbers(a, b):
     "This is just for testing - to be removed"
