@@ -1,8 +1,7 @@
 {
-  "items": [
-    {
+  "items": {
+    "Banana" : {
       "id": 1,
-      "name": "Banana",
       "rarity": "Common",
       "tags": [
         "Food"
@@ -13,9 +12,8 @@
         "stamina_regeneration": 1
       }
     },
-    {
+    "Wooden Sword" : {
       "id": 2,
-      "name": "Wooden Sword",
       "rarity": "Common",
       "tags": [
         "Melee Weapon"
@@ -28,9 +26,8 @@
         "stamina_cost": 0.7
       }
     },
-    {
+    "Stone" : {
       "id": 3,
-      "name": "Stone",
       "rarity": "Common",
       "tags": [
         "Ranged Weapon"
@@ -44,9 +41,8 @@
         "armour destruction": 3
       }
     },
-    {
+    "Pan" : {
       "id": 4,
-      "name": "Pan",
       "rarity": "Common",
       "tags": [
         "Melee Weapon"
@@ -60,9 +56,8 @@
         "damage bonus": 1
       }
     },
-    {
+    "Wooden Buckler" : {
       "id": 5,
-      "name": "wooden buckler",
       "rarity": "Common",
       "tags": [
         "Shield"
@@ -73,9 +68,8 @@
         "stamina_removal": 0.3
       }
     },
-    {
+    "Lump of Coal" : {
       "id": 6,
-      "name": "lump of coal",
       "rarity": "Common",
       "tags": [
         "Gemstone"
@@ -84,9 +78,8 @@
         "cooldown": 3
       }
     },
-    {
+    "Garlic" : {
       "id": 7,
-      "name": "garlic",
       "rarity": "Common",
       "tags": [
         "Food"
@@ -98,9 +91,8 @@
         "vamprism removal chance": 0.3
       }
     },
-    {
+    "Healing Herbs" : {
       "id": 8,
-      "name": "healing herbs",
       "rarity": "Common",
       "tags": [
         "Accessory"
@@ -109,9 +101,8 @@
         "regeneration": 2
       }
     },
-    {
+    "Walrus Tusk" : {
       "id": 9,
-      "name": "healing herbs",
       "rarity": "Common",
       "tags": [
         "Accessory"
@@ -120,9 +111,8 @@
         "spikes": 1
       }
     },
-    {
+    "Piggybank" : {
       "id": 10,
-      "name": "piggybank",
       "rarity": "Common",
       "tags": [
         "Accessory"
@@ -132,9 +122,8 @@
         "health": 2
       }
     },
-    {
+    "Whetstone" : {
       "id": 11,
-      "name": "Whetstone",
       "rarity": "Common",
       "tags": [
         "Accessory"
@@ -143,9 +132,8 @@
         "damage_gain": 1
       }
     },
-    {
+    "Pocket Sand" : {
       "id": 12,
-      "name": "Pocket Sand",
       "rarity": "Common",
       "tags": [
         "Accessory"
@@ -154,9 +142,8 @@
         "blind": 1
       }
     },
-    {
+    "Leather Bag" : {
       "id": 13,
-      "name": "Leather Bag",
       "rarity": "Common",
       "tags": [
         "Bag"
@@ -165,5 +152,5 @@
         "slots": 4
       }
     }
-  ]
+  }
 }
