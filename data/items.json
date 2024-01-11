@@ -3,6 +3,7 @@
     "Banana" : {
       "id": 1,
       "rarity": "Common",
+      "cost": 3,
       "tags": [
         "Food"
       ],
@@ -15,6 +16,7 @@
     "Wooden Sword" : {
       "id": 2,
       "rarity": "Common",
+      "cost": 3,
       "tags": [
         "Melee Weapon"
       ],
@@ -29,6 +31,7 @@
     "Stone" : {
       "id": 3,
       "rarity": "Common",
+      "cost": 1,
       "tags": [
         "Ranged Weapon"
       ],
@@ -44,6 +47,7 @@
     "Pan" : {
       "id": 4,
       "rarity": "Common",
+      "cost": 4,
       "tags": [
         "Melee Weapon"
       ],
@@ -59,6 +63,7 @@
     "Wooden Buckler" : {
       "id": 5,
       "rarity": "Common",
+      "cost": 4,
       "tags": [
         "Shield"
       ],
@@ -71,6 +76,7 @@
     "Lump of Coal" : {
       "id": 6,
       "rarity": "Common",
+      "cost": 2,
       "tags": [
         "Gemstone"
       ],
@@ -81,6 +87,7 @@
     "Garlic" : {
       "id": 7,
       "rarity": "Common",
+      "cost": 2,
       "tags": [
         "Food"
       ],
@@ -94,6 +101,7 @@
     "Healing Herbs" : {
       "id": 8,
       "rarity": "Common",
+      "cost": 4,
       "tags": [
         "Accessory"
       ],
@@ -104,6 +112,7 @@
     "Walrus Tusk" : {
       "id": 9,
       "rarity": "Common",
+      "cost": 4,
       "tags": [
         "Accessory"
       ],
@@ -114,6 +123,7 @@
     "Piggybank" : {
       "id": 10,
       "rarity": "Common",
+      "cost": 3,
       "tags": [
         "Accessory"
       ],
@@ -125,6 +135,7 @@
     "Whetstone" : {
       "id": 11,
       "rarity": "Common",
+      "cost": 4,
       "tags": [
         "Accessory"
       ],
@@ -135,6 +146,7 @@
     "Pocket Sand" : {
       "id": 12,
       "rarity": "Common",
+      "cost": 2,
       "tags": [
         "Accessory"
       ],
@@ -145,6 +157,7 @@
     "Leather Bag" : {
       "id": 13,
       "rarity": "Common",
+      "cost": 4,
       "tags": [
         "Bag"
       ],
