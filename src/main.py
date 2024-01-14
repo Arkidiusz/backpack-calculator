@@ -6,15 +6,21 @@ def add_numbers(a, b):
     print("running main.py")
     return a + b
 
+
 class Backpack:
     """Represents all information in a backpack used to calculate its value
 
     Attributes:
         item_data: a json file containing item data
+        items: a list of items in a backpack
     """
+
     def __init__(cls, item_data_path = 'data/items.json'):        
         item_data_file = open(item_data_path)
         cls.item_data = json.load(item_data_file)
+
+        cls.items = []
+        cls.combat_duration = 1
 
 class Item:
     """Item represents all properties of an item used to evaluate its value contribution to a backpack
@@ -28,6 +34,14 @@ class Item:
         cls.backpack = backpack
         cls.name = name
         cls.tags = tags
+    
+    def get_metrics(cls) -> dict[str, float]:
+        """Computes all metrics contributed by item to a backpack
+
+        :return: a mapping of metrics name and its value
+        :rtpe: dict[str, float]
+        """
+        raise Exception('Abstract function, requires implementation')
 
 class Food:
     """An Item type which scales cooldown with other food of different type
@@ -59,3 +73,22 @@ class Banana(Item, Food):
         cls.heal = attributes['heal']
         cls.stamina_regeneration = attributes['stamina_regeneration']
         cls.cooldown = attributes['cooldown']
+    
+    def get_metrics(cls) -> dict[str, float]:
+        """
+        Metrics:
+            healing: total healing item contributes over combat duration
+            stamina: total stamina item restores in combat (assuming dicitonary is not capped)
+        """
+        cooldown = cls.cooldown * (1 - cls.adjecent_food * cls.ADJECENCY_SCALING)
+        triggers = cls.backpack.combat_duration // cooldown
+        
+        metrics = {}
+
+        healing = triggers * cls.heal
+        metrics['healing'] = healing
+
+        stamina = triggers * cls.stamina_regeneration   
+        metrics['stamina'] = stamina
+
+        return metrics       
