@@ -14,6 +14,7 @@ class Backpack:
         item_data: a json file containing item data
         items: a dictionary mapping of 
     """
+    BASE_STAMINA_GENERATION = 1
 
     def __init__(cls, item_data_path = 'data/items.json'):        
         item_data_file = open(item_data_path)
@@ -21,16 +22,36 @@ class Backpack:
 
         cls.items = {}
         cls.combat_duration = 1
+
+        cls._update_metrics()
     
-    def add_item(cls, item : Item) -> None:
-        """Adds item with its metrics items list and recomputes metrics
+    def update_item(cls, item : Item) -> None:
+        """Updates item metrics/adds a new item to items list and recomputes Backpack metrics
 
         Attributes:
             :item: an item object 
         """
         metrics = item.get_metrics()
         cls.items[item] = metrics
-        cls._compute_metrics()
+        cls._update_metrics()
+    
+    def _update_metrics(cls) -> None:
+        """Computes all metrics in the backpack
+        """
+        
+        
+        stamina = 0
+        healing = 0
+        for item, metrics in cls.items.items():
+            for metric_name, metric_value in metrics.items():
+                match metric_name:
+                    case 'stamina':
+                        stamina += metric_value
+                    case 'healing':
+                        healing += metric_value
+
+        cls.sps = cls.BASE_STAMINA_GENERATION + stamina / cls.combat_duration
+        cls.hps = healing / cls.combat_duration
 
 
 class Item:
