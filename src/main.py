@@ -12,15 +12,26 @@ class Backpack:
 
     Attributes:
         item_data: a json file containing item data
-        items: a list of items in a backpack
+        items: a dictionary mapping of 
     """
 
     def __init__(cls, item_data_path = 'data/items.json'):        
         item_data_file = open(item_data_path)
         cls.item_data = json.load(item_data_file)
 
-        cls.items = []
+        cls.items = {}
         cls.combat_duration = 1
+    
+    def add_item(cls, item : Item) -> None:
+        """Adds item with its metrics items list and recomputes metrics
+
+        Attributes:
+            :item: an item object 
+        """
+        metrics = item.get_metrics()
+        cls.items[item] = metrics
+        cls._compute_metrics()
+
 
 class Item:
     """Item represents all properties of an item used to evaluate its value contribution to a backpack
@@ -39,9 +50,9 @@ class Item:
         """Computes all metrics contributed by item to a backpack
 
         :return: a mapping of metrics name and its value
-        :rtpe: dict[str, float]
         """
         raise Exception('Abstract function, requires implementation')
+
 
 class Food:
     """An Item type which scales cooldown with other food of different type
@@ -54,6 +65,7 @@ class Food:
 
     def __init__(cls, adjacent_food: int = 0):
         cls.adjacent_food = adjacent_food
+
 
 class Banana(Item, Food):
     """Banana is an item which provides health and stamina regeneration on trigger and scales with other food
