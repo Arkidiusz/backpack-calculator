@@ -36,5 +36,5 @@ def test_update_metrics(backpack, banana):
     backpack._update_metrics()
 
     # Assert
-    assert backpack.sps == 1.1875 # TODO figure out a way to calculate this here
+    assert backpack.sps == 1.1875
     assert backpack.hps == 0.75
