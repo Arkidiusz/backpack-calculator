@@ -14,35 +14,36 @@ class Backpack:
         item_data: a json file containing item data
         items: a dictionary mapping of 
     """
+
     BASE_STAMINA_GENERATION = 1
 
-    def __init__(cls, item_data_path = 'data/items.json'):        
+    def __init__(self, item_data_path = 'data/items.json'):        
         item_data_file = open(item_data_path)
-        cls.item_data = json.load(item_data_file)
+        self.item_data = json.load(item_data_file)
 
-        cls.items = {}
-        cls.combat_duration = 1
+        self.items = {}
+        self.combat_duration = 1
 
-        cls._update_metrics()
+        self._update_metrics()
     
-    def update_item(cls, item : Item) -> None:
+    def update_item(self, item : Item) -> None:
         """Updates item metrics/adds a new item to items list and recomputes Backpack metrics
 
         Attributes:
             :item: an item object 
         """
+
         metrics = item.get_metrics()
-        cls.items[item] = metrics
-        cls._update_metrics()
+        self.items[item] = metrics
+        self._update_metrics()
     
-    def _update_metrics(cls) -> None:
-        """Computes all metrics in the backpack
+    def _update_metrics(self) -> None:
+        """Computes and updates all metrics in the backpack
         """
-        
         
         stamina = 0
         healing = 0
-        for item, metrics in cls.items.items():
+        for item, metrics in self.items.items():
             for metric_name, metric_value in metrics.items():
                 match metric_name:
                     case 'stamina':
@@ -50,8 +51,8 @@ class Backpack:
                     case 'healing':
                         healing += metric_value
 
-        cls.sps = cls.BASE_STAMINA_GENERATION + stamina / cls.combat_duration
-        cls.hps = healing / cls.combat_duration
+        self.sps = self.BASE_STAMINA_GENERATION + stamina / self.combat_duration
+        self.hps = healing / self.combat_duration
 
 
 class Item:
@@ -62,17 +63,17 @@ class Item:
         name: name of item
         tags: A list of tags of item such as "food" or "bag"
     """
-    def __init__(cls, backpack: Backpack, name: str, tags: list[str]):
-        cls.backpack = backpack
-        cls.name = name
-        cls.tags = tags
+    def __init__(self, backpack: Backpack, name: str, tags: list[str]):
+        self.backpack = backpack
+        self.name = name
+        self.tags = tags
     
-    def get_metrics(cls) -> dict[str, float]:
+    def get_metrics(self) -> dict[str, float]:
         """Computes all metrics contributed by item to a backpack
 
         :return: a mapping of metrics name and its value
         """
-        raise Exception('Abstract function, requires implementation')
+        raise BackpackException('Abstract function, requires implementation')
 
 
 class Food:
@@ -84,8 +85,8 @@ class Food:
     """
     ADJECENCY_SCALING = 0.1
 
-    def __init__(cls, adjacent_food: int = 0):
-        cls.adjacent_food = adjacent_food
+    def __init__(self, adjacent_food: int = 0):
+        self.adjacent_food = adjacent_food
 
 
 class Banana(Item, Food):
@@ -97,31 +98,35 @@ class Banana(Item, Food):
         cooldown: A list of tags of item such as "food" or "bag"
     """
 
-    def __init__(cls, backpack: Backpack):
+    def __init__(self, backpack: Backpack):
         banana_data = backpack.item_data['items']['Banana']
-        Item.__init__(cls, backpack, 'Banana', banana_data['tags'])
-        Food.__init__(cls)
+        Item.__init__(self, backpack, 'Banana', banana_data['tags'])
+        Food.__init__(self)
         
         attributes = banana_data['attributes']
-        cls.heal = attributes['heal']
-        cls.stamina_regeneration = attributes['stamina_regeneration']
-        cls.cooldown = attributes['cooldown']
+        self.heal = attributes['heal']
+        self.stamina_regeneration = attributes['stamina_regeneration']
+        self.cooldown = attributes['cooldown']
     
-    def get_metrics(cls) -> dict[str, float]:
+    def get_metrics(self) -> dict[str, float]:
         """
         Metrics:
             healing: total healing item contributes over combat duration
             stamina: total stamina item restores in combat (assuming dicitonary is not capped)
         """
-        cooldown = cls.cooldown * (1 - cls.adjecent_food * cls.ADJECENCY_SCALING)
-        triggers = cls.backpack.combat_duration // cooldown
+        cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJECENCY_SCALING)
+        triggers = self.backpack.combat_duration // cooldown
         
         metrics = {}
 
-        healing = triggers * cls.heal
+        healing = triggers * self.heal
         metrics['healing'] = healing
 
-        stamina = triggers * cls.stamina_regeneration   
+        stamina = triggers * self.stamina_regeneration   
         metrics['stamina'] = stamina
 
         return metrics       
+
+class BackpackException(Exception):
+    """ A base class for all exception related to Backpack errors
+    """
