@@ -4,7 +4,7 @@ import src.backpack
 import src.items
 
 
-combat_duration = 1
+combat_duration = 16
 
 def get_item_data():
     item_data_file = open('data/items.json', encoding='utf-8')

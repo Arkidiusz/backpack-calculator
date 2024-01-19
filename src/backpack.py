@@ -1,4 +1,5 @@
 from src.items import Item
+from src.controller import *
 
 class Backpack:
     """Represents all information in a backpack used to calculate its value
@@ -15,7 +16,6 @@ class Backpack:
 
     def __init__(self):        
         self.items = {}
-        self.combat_duration = 1
 
         self._update_metrics()
     
@@ -44,5 +44,5 @@ class Backpack:
                     case 'healing':
                         healing += metric_value
 
-        self.sps = self.BASE_STAMINA_GENERATION + stamina / self.combat_duration
-        self.hps = healing / self.combat_duration
+        self.sps = self.BASE_STAMINA_GENERATION + stamina / get_combat_duration()
+        self.hps = healing / get_combat_duration()

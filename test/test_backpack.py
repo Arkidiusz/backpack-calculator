@@ -1,19 +1,40 @@
 from src.backpack import Backpack
 from src.items import Banana
+
+import pytest
 from unittest.mock import MagicMock
 
-def test_update_item_new_item():
+@pytest.fixture
+def backpack():
+    return Backpack()
+
+@pytest.fixture
+def banana():
+    return Banana()
+
+def test_update_item_new_item(backpack, banana):
     # Arrange
     mock_update_metrics = MagicMock()
-    backpack = Backpack()
     backpack._update_metrics = mock_update_metrics
-    banana = Banana()
-    metrics = banana.get_metrics()
 
     # Act
     backpack.update_item(banana)
 
     # Assert
     assert banana in backpack.items
-    assert backpack.items[banana] == metrics
+    assert backpack.items[banana] == banana.get_metrics()
+    assert len(backpack.items) == 1
     mock_update_metrics.assert_called_once()
+
+def test_update_item_existing_item(backpack, banana):
+    # TODO implement once updating items is implemented
+    pass
+
+def test_update_metrics(backpack, banana):
+    # Act
+    backpack.update_item(banana)
+    backpack._update_metrics()
+
+    # Assert
+    assert backpack.sps == 1.1875 # TODO figure out a way to calculate this here
+    assert backpack.hps == 0.75
