@@ -14,8 +14,8 @@ def banana():
 
 def test_update_item_new_item(backpack, banana):
     # Arrange
-    mock_update_metrics = MagicMock()
-    backpack._update_metrics = mock_update_metrics
+    mock_compute_metrics = MagicMock()
+    backpack.compute_metrics = mock_compute_metrics
 
     # Act
     backpack.update_item(banana)
@@ -24,17 +24,29 @@ def test_update_item_new_item(backpack, banana):
     assert banana in backpack.items
     assert backpack.items[banana] == banana.get_metrics()
     assert len(backpack.items) == 1
-    mock_update_metrics.assert_called_once()
+    mock_compute_metrics.assert_called_once()
 
 def test_update_item_existing_item(backpack, banana):
     # TODO implement once updating items is implemented
     pass
 
+def test_compute_metrics(backpack, banana):
+    # Act
+    backpack.update_item(banana)
+    metrics = backpack.compute_metrics()
+
+    # Assert
+    assert metrics['sps'] == 1.1875
+    assert metrics['hps'] == 0.75
+
 def test_update_metrics(backpack, banana):
     # Act
     backpack.update_item(banana)
-    backpack._update_metrics()
+    metrics = backpack.compute_metrics()
+    backpack.sps = -1
+    backpack.hps = -1
+    backpack._update_metrics(metrics)
 
     # Assert
-    assert backpack.sps == 1.1875
-    assert backpack.hps == 0.75
+    backpack.sps == metrics['sps']
+    backpack.hps == metrics['hps']
