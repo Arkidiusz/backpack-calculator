@@ -38,3 +38,15 @@ def test_compute_metrics(backpack, banana):
     # Assert
     assert metrics['sps'] == 1.1875
     assert metrics['hps'] == 0.75
+
+def test_update_metrics(backpack, banana):
+    # Act
+    backpack.update_item(banana)
+    metrics = backpack.compute_metrics()
+    backpack.sps = -1
+    backpack.hps = -1
+    backpack._update_metrics(metrics)
+
+    # Assert
+    backpack.sps == metrics['sps']
+    backpack.hps == metrics['hps']
