@@ -16,8 +16,8 @@ class Backpack:
 
     def __init__(self):        
         self.items = {}
-
-        self._update_metrics()
+        metrics = self.compute_metrics()
+        self._update_metrics(metrics)
     
     def update_item(self, item : Item) -> None:
         """Updates item metrics/adds a new item to items list and recomputes Backpack metrics
@@ -26,17 +26,28 @@ class Backpack:
             :item: an item object 
         """
 
-        metrics = item.get_metrics()
-        self.items[item] = metrics
-        self._update_metrics()
+        item_metrics = item.get_metrics()
+        self.items[item] = item_metrics 
+        
+        backpack_metrics = self.compute_metrics()
+        self._update_metrics(backpack_metrics)
+
     
-    def _update_metrics(self) -> None:
-        """Computes and updates all metrics in the backpack
+    def compute_metrics(self, item : Item = None) -> dict[str, float]:
+        """Computes all metrics in the backpack
+
+        Attributes:
+            :item: additional item to those already in the backpack
+
+        :return: a dictionary of metric name to its value
         """
         
         stamina = 0
         healing = 0
-        for metrics in self.items.values():
+        items = self.items
+        if item:
+            items += {item : item.get_metrics()}
+        for metrics in items.values():
             for metric_name, metric_value in metrics.items():
                 match metric_name:
                     case 'stamina':
@@ -44,5 +55,17 @@ class Backpack:
                     case 'healing':
                         healing += metric_value
 
-        self.sps = self.BASE_STAMINA_GENERATION + stamina / get_combat_duration()
-        self.hps = healing / get_combat_duration()
+        metrics = {}
+        metrics['sps'] = self.BASE_STAMINA_GENERATION + stamina / get_combat_duration()
+        metrics['hps'] = healing / get_combat_duration()
+
+        return metrics
+
+    def _update_metrics(self, metrics : dict[str, float]) -> None:
+        """ Updates backpack with the given metrics
+        Attributes:
+            :metrics: dictionary of metric name and its value
+        """
+
+        self.sps = metrics['sps']
+        self.hps = metrics['hps']
