@@ -13,6 +13,7 @@ class Backpack:
     """
 
     BASE_STAMINA_GENERATION = 1
+    BASE_STAMINA = 5
 
     def __init__(self):        
         self.items = {}
@@ -42,8 +43,10 @@ class Backpack:
         :return: a dictionary of metric name to its value
         """
         
-        stamina = 0
+        stamina = self.BASE_STAMINA
         healing = 0
+        stamina_cost = 0
+        damage = 0
         items = self.items
         if item:
             items += {item : item.get_metrics()}
@@ -54,10 +57,18 @@ class Backpack:
                         stamina += metric_value
                     case 'healing':
                         healing += metric_value
-
+                    case 'stamina_cost':
+                        stamina_cost += metric_value
+                    case 'damage':
+                        damage += metric_value
+                        
         metrics = {}
-        metrics['sps'] = self.BASE_STAMINA_GENERATION + stamina / get_combat_duration()
         metrics['hps'] = healing / get_combat_duration()
+        metrics['sps'] = self.BASE_STAMINA_GENERATION + (stamina - stamina_cost) / get_combat_duration()
+        dps = damage / get_combat_duration()
+        if stamina_cost > stamina:
+            dps = dps * (stamina / stamina_cost)
+        metrics['dps'] = dps
 
         return metrics
 
