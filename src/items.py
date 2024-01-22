@@ -100,9 +100,10 @@ class WoodenSword(Item):
         """
         cooldown = self.cooldown
         triggers = get_combat_duration() // cooldown
+        print(triggers)
         metrics = {}
 
-        damage = triggers * (sum(self.minimum_damage, self.maximum_damage) / 2) * self.accuracy
+        damage = int(triggers * self.accuracy) * (sum([self.minimum_damage, self.maximum_damage]) / 2)
         metrics['damage'] = damage 
 
         stamina_cost = triggers * self.stamina_cost
