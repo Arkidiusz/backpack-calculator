@@ -69,3 +69,43 @@ class Banana(Item, Food):
         metrics['stamina'] = stamina
 
         return metrics       
+
+class WoodenSword(Item):
+    """WoodenSword is a basic melee weapon
+
+    Attributes:
+        minimum_damage: minimum damage dealt on trigger
+        maximum_damage: maximum damage dealt on trigger
+        cooldown: frequency of triggers
+        accuracy: chance to deal damage on trigger
+        stamina_cost: cost of stamina on trigger
+    """
+
+    def __init__(self):
+        sword_data = get_item_data()['items']['Wooden Sword']
+        Item.__init__(self, 'Wooden Sword', sword_data['tags'])
+        
+        attributes = sword_data['attributes']
+        self.minimum_damage = attributes['minimum_damage']
+        self.maximum_damage = attributes['maximum_damage']
+        self.cooldown = attributes['cooldown']
+        self.accuracy = attributes['accuracy']
+        self.stamina_cost = attributes['stamina_cost']
+    
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            damage: expected total damage assuming enough stamina
+            stamina_cost: expected total stamina cost
+        """
+        cooldown = self.cooldown
+        triggers = get_combat_duration() // cooldown
+        metrics = {}
+
+        damage = triggers * (sum(self.minimum_damage, self.maximum_damage) / 2) * self.accuracy
+        metrics['damage'] = damage 
+
+        stamina_cost = triggers * self.stamina_cost
+        metrics['stamina_cost'] = stamina_cost
+
+        return metrics       
