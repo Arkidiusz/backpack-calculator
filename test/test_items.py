@@ -22,7 +22,7 @@ def test_create_item(item_name, item_tags, item_cost):
     # Assert
     assert item.name == item_name
     assert item.tags == item_tags
-    assert item.cost == 3
+    assert item.cost == item_cost
 
 def test_get_metrics_raises(item_name):
     # Except
@@ -53,6 +53,19 @@ def test_banana_get_metrics():
     # Assert
     assert metrics['healing'] == 12
     assert metrics['stamina'] == 3
+
+def test_create_garlic():
+    # Arrange
+    attributes = get_item_data()['items']['Garlic']['attributes']
+
+    # Act
+    garlic = Garlic()
+
+    # Assert
+    garlic.armor_generation = attributes['armor_generation']
+    garlic.vampirism_removal = attributes['vampirism_removal']
+    garlic.vamprism_removal_chance = attributes['vamprism_removal_chance']
+
 
 def test_create_wooden_sword():
     # Arrange
