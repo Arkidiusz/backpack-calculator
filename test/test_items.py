@@ -5,23 +5,28 @@ import pytest
 
 @pytest.fixture
 def item_name():
-    return 'tast-name'
+    return 'Wooden Sword'
 
 @pytest.fixture
 def item_tags():
-    return ['tast-tag']
+    return ['Melee Weapon']
 
-def test_create_item(item_name, item_tags):
+@pytest.fixture
+def item_cost():
+    return 3
+
+def test_create_item(item_name, item_tags, item_cost):
     # Act
-    item = Item(item_name, item_tags)
+    item = Item(item_name)
 
     # Assert
     assert item.name == item_name
     assert item.tags == item_tags
+    assert item.cost == 3
 
-def test_get_metrics_raises(item_name, item_tags):
+def test_get_metrics_raises(item_name):
     # Except
-    item = Item(item_name, item_tags)
+    item = Item(item_name)
     with pytest.raises(BackpackException):
         item.get_metrics()
 
