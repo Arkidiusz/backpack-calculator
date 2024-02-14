@@ -66,6 +66,17 @@ def test_create_garlic():
     garlic.vampirism_removal = attributes['vampirism_removal']
     garlic.vamprism_removal_chance = attributes['vamprism_removal_chance']
 
+def test_garlic_get_metrics():
+    # Arrange
+    attributes = get_item_data()['items']['Garlic']['attributes']
+
+    # Act
+    garlic = Garlic()
+    metrics = garlic.get_metrics()
+
+    # Assert
+    assert metrics['armor'] == 12
+    assert metrics['vampirism_removal'] == 1.2
 
 def test_create_wooden_sword():
     # Arrange
