@@ -57,11 +57,11 @@ def test_create_wooden_sword():
     sword = WoodenSword()
 
     # Assert
-    sword.minimum_damage = attributes['minimum_damage']
-    sword.maximum_damage = attributes['maximum_damage']
-    sword.cooldown = attributes['cooldown']
-    sword.accuracy = attributes['accuracy']
-    sword.stamina_cost = attributes['stamina_cost']
+    assert sword.minimum_damage == attributes['minimum_damage']
+    assert sword.maximum_damage == attributes['maximum_damage']
+    assert sword.cooldown == attributes['cooldown']
+    assert sword.accuracy == attributes['accuracy']
+    assert sword.stamina_cost == attributes['stamina_cost']
 
 def test_wooden_sword_get_metrics():
     # Arrange
