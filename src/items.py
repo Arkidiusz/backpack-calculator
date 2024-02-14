@@ -75,6 +75,43 @@ class Banana(Food):
         metrics['stamina'] = stamina
 
         return metrics
+    
+
+class Garlic(Food):
+    """Garlic is an item which provides armor and vampirism removal on trigger
+
+        Attributes:
+            armor_generation: how much armor it provides on trigger
+            vampirism_removal: how much vampirism is removed on trigger
+            vamprism_removal_chance: chance to remove vampirism on trigger
+    """
+
+    def __init__(self, adjacent_food: int = 1):
+        Food.__init__(self, 'Garlic', adjacent_food)
+        
+        attributes = self.item_data['attributes']
+        self.armor_generation = attributes['armor_generation']
+        self.vampirism_removal = attributes['vampirism_removal']
+        self.vamprism_removal_chance = attributes['vamprism_removal_chance']
+    
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            armor: total armor item contributes over the combat duration
+            vampirism_removal: total vamirism item removes over the combat duration
+        """
+        cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJECENCY_SCALING)
+        triggers = get_combat_duration() // cooldown
+        metrics = {}
+
+        armor = triggers * self.armor_generation
+        metrics['armor'] = armor
+
+        vampirism_removal = triggers * self.vamprism_removal_chance * self.vampirism_removal
+        metrics['vampirism_removal'] = vampirism_removal
+
+        return metrics
+
 
 class Weapon(Item):
     """ Item Type which deals damage on trigger
@@ -99,13 +136,6 @@ class Weapon(Item):
 
 class WoodenSword(Weapon):
     """WoodenSword is a basic melee weapon
-
-    Attributes:
-        minimum_damage: minimum damage dealt on trigger
-        maximum_damage: maximum damage dealt on trigger
-        cooldown: frequency of triggers
-        accuracy: chance to deal damage on trigger
-        stamina_cost: cost of stamina on trigger
     """
 
     def __init__(self):
@@ -132,13 +162,8 @@ class Pan(Weapon):
     """Pan is a basic melee weapon scaling with adjacent Food items
 
     Attributes:
-        minimum_damage: minimum damage dealt on trigger
-        maximum_damage: maximum damage dealt on trigger
-        cooldown: frequency of triggers
-        accuracy: chance to deal damage on trigger
-        stamina_cost: cost of stamina on trigger
         adjacent_foods: number of adjacent food items
-        damage_bonus: how much damage each adhacent food contributes
+        damage_bonus: how much damage each adjacent food contributes
     """
 
     def __init__(self, adjacent_foods = 1):
