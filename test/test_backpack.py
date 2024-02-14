@@ -1,5 +1,5 @@
 from src.backpack import Backpack
-from src.items import Banana, WoodenSword
+from src.items import Banana, WoodenSword, Garlic
 
 import pytest
 from unittest.mock import MagicMock
@@ -15,6 +15,10 @@ def banana():
 @pytest.fixture
 def wooden_sword():
     return WoodenSword()
+
+@pytest.fixture
+def garlic():
+    return Garlic()
 
 def test_update_item_new_item(backpack, banana):
     # Arrange
@@ -34,16 +38,19 @@ def test_update_item_existing_item(backpack, banana,):
     # TODO implement once updating items is implemented
     pass
 
-def test_compute_metrics(backpack, banana, wooden_sword):
+def test_compute_metrics(backpack, banana, wooden_sword, garlic):
     # Act
     backpack.update_item(banana)
     backpack.update_item(wooden_sword)
+    backpack.update_item(garlic)
     metrics = backpack.compute_metrics()
 
     # Assert
     assert metrics['sps'] == 1.01875
     assert metrics['hps'] == 0.75
     assert metrics['dps'] == 1.2375
+    assert metrics['armor'] == 12
+    assert metrics['vampirism_removal'] == 1.2
 
 def test_update_metrics(backpack, banana):
     # Act

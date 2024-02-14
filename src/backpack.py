@@ -47,6 +47,8 @@ class Backpack:
         healing = 0
         stamina_cost = 0
         damage = 0
+        armor = 0
+        vampirism_removal = 0
         items = self.items
         if item:
             items += {item : item.get_metrics()}
@@ -61,8 +63,14 @@ class Backpack:
                         stamina_cost += metric_value
                     case 'damage':
                         damage += metric_value
+                    case 'armor':
+                        armor += metric_value
+                    case 'vampirism_removal':
+                        vampirism_removal += metric_value
                         
         metrics = {}
+        metrics['armor'] = armor
+        metrics['vampirism_removal'] = vampirism_removal
         metrics['hps'] = healing / get_combat_duration()
         metrics['sps'] = self.BASE_STAMINA_GENERATION + (stamina - stamina_cost) / get_combat_duration()
         dps = damage / get_combat_duration()
