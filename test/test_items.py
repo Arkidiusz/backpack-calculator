@@ -89,4 +89,5 @@ def test_create_pan():
     assert pan.cooldown == attributes['cooldown']
     assert pan.accuracy == attributes['accuracy']
     assert pan.stamina_cost == attributes['stamina_cost']
+    assert pan.damage_bonus == attributes['damage_bonus']
     assert pan.adjacent_foods == adjacent_foods
