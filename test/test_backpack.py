@@ -43,7 +43,7 @@ def test_compute_metrics(backpack, banana, wooden_sword):
     # Assert
     assert metrics['sps'] == 1.01875
     assert metrics['hps'] == 0.75
-    assert metrics['dps'] == 1.125
+    assert metrics['dps'] == 1.2375
 
 def test_update_metrics(backpack, banana):
     # Act

@@ -57,11 +57,11 @@ def test_create_wooden_sword():
     sword = WoodenSword()
 
     # Assert
-    sword.minimum_damage = attributes['minimum_damage']
-    sword.maximum_damage = attributes['maximum_damage']
-    sword.cooldown = attributes['cooldown']
-    sword.accuracy = attributes['accuracy']
-    sword.stamina_cost = attributes['stamina_cost']
+    assert sword.minimum_damage == attributes['minimum_damage']
+    assert sword.maximum_damage == attributes['maximum_damage']
+    assert sword.cooldown == attributes['cooldown']
+    assert sword.accuracy == attributes['accuracy']
+    assert sword.stamina_cost == attributes['stamina_cost']
 
 def test_wooden_sword_get_metrics():
     # Arrange
@@ -72,5 +72,34 @@ def test_wooden_sword_get_metrics():
     metrics = sword.get_metrics()
 
     # Assert
-    assert metrics['damage'] == 18.0
+    assert metrics['damage'] == 19.8
     assert metrics['stamina_cost'] == 7.699999999999999
+
+def test_create_pan():
+    # Arrange
+    attributes = get_item_data()['items']['Pan']['attributes']
+    adjacent_foods = 4
+
+    # Act
+    pan = Pan(adjacent_foods)
+
+    # Assert
+    assert pan.minimum_damage == attributes['minimum_damage']
+    assert pan.maximum_damage == attributes['maximum_damage']
+    assert pan.cooldown == attributes['cooldown']
+    assert pan.accuracy == attributes['accuracy']
+    assert pan.stamina_cost == attributes['stamina_cost']
+    assert pan.damage_bonus == attributes['damage_bonus']
+    assert pan.adjacent_foods == adjacent_foods
+
+def test_pan_get_metrics():
+    # Arrange
+    adjacent_foods = 2
+
+    # Act
+    pan = Pan(adjacent_foods)
+    metrics = pan.get_metrics()
+
+    # Assert
+    assert metrics['damage'] == 32.725
+    assert metrics['stamina_cost'] == 6.3

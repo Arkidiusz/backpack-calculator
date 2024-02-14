@@ -57,7 +57,7 @@
         "cooldown": 2.2,
         "accuracy": 0.85,
         "stamina_cost": 0.9,
-        "damage bonus": 1
+        "damage_bonus": 1
       }
     },
     "Wooden Buckler" : {

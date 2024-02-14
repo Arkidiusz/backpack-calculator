@@ -98,15 +98,60 @@ class WoodenSword(Item):
             damage: expected total damage assuming enough stamina
             stamina_cost: expected total stamina cost
         """
-        cooldown = self.cooldown
-        triggers = get_combat_duration() // cooldown
-        print(triggers)
+        triggers = get_combat_duration() // self.cooldown
         metrics = {}
 
-        damage = int(triggers * self.accuracy) * (sum([self.minimum_damage, self.maximum_damage]) / 2)
+        damage = triggers * self.accuracy * (sum([self.minimum_damage, self.maximum_damage]) / 2)
         metrics['damage'] = damage 
 
         stamina_cost = triggers * self.stamina_cost
         metrics['stamina_cost'] = stamina_cost
 
         return metrics       
+
+class Pan(Item):
+    """Pan is a basic melee weapon scaling with adjacent Food items
+
+    Attributes:
+        minimum_damage: minimum damage dealt on trigger
+        maximum_damage: maximum damage dealt on trigger
+        cooldown: frequency of triggers
+        accuracy: chance to deal damage on trigger
+        stamina_cost: cost of stamina on trigger
+        adjacent_foods: number of adjacent food items
+        damage_bonus: how much damage each adhacent food contributes
+    """
+
+    def __init__(self, adjacent_foods = 1):
+        sword_data = get_item_data()['items']['Pan']
+        Item.__init__(self, 'Wooden Sword', sword_data['tags'])
+        
+        attributes = sword_data['attributes']
+        self.minimum_damage = attributes['minimum_damage']
+        self.maximum_damage = attributes['maximum_damage']
+        self.cooldown = attributes['cooldown']
+        self.accuracy = attributes['accuracy']
+        self.stamina_cost = attributes['stamina_cost']
+        self.damage_bonus = attributes['damage_bonus']
+        
+        self.adjacent_foods = adjacent_foods
+    
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            damage: expected total damage assuming enough stamina
+            stamina_cost: expected total stamina cost
+        """
+        triggers = get_combat_duration() // self.cooldown
+        metrics = {}
+
+        minimum_damage = self.minimum_damage + self.adjacent_foods * self.damage_bonus
+        maximum_damage = self.maximum_damage + self.adjacent_foods * self.damage_bonus
+        damage = triggers * self.accuracy * (sum([minimum_damage, maximum_damage]) / 2)
+        metrics['damage'] = damage 
+
+        stamina_cost = triggers * self.stamina_cost
+        metrics['stamina_cost'] = stamina_cost
+
+        return metrics
+    
