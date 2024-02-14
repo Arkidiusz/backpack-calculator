@@ -6,11 +6,16 @@ class Item:
 
     Attributes:
         name: name of item
-        tags: A list of tags of item such as "food" or "bag"
+        item_data: a dictionary of all data associated with the item
+        tags: a list of tags of item such as "food" or "bag"
+        cost: an integer cost of an item
     """
-    def __init__(self, name: str, tags: list[str]):
+    def __init__(self, name: str):
         self.name = name
-        self.tags = tags
+        
+        self.item_data = get_item_data()['items'][name]
+        self.tags = self.item_data['tags']
+        self.cost = self.item_data['cost']
     
     def get_metrics(self) -> dict[str, float]:
         """Computes all metrics contributed by item to a backpack
@@ -20,37 +25,38 @@ class Item:
         raise BackpackException('Abstract function, requires implementation')
 
 
-class Food:
+class Food(Item):
     """An Item type which scales cooldown with other food of different type
 
     Attributes:
         adjacent_food: a number of adjecent food of different type
+        cooldown: A list of tags of item such as "food" or "bag"
         ADJECENCY_SCALING: an additive cooldown bonus for each adjecent_food, e.g. 3 adjecent items will reduce the cooldown by multiplier of 0.7
     """
     ADJECENCY_SCALING = 0.1
 
-    def __init__(self, adjacent_food: int = 0):
+    def __init__(self, name: str, adjacent_food: int = 1):
+        Item.__init__(self, name)
         self.adjacent_food = adjacent_food
 
+        self.cooldown = self.item_data['attributes']['cooldown']
 
-class Banana(Item, Food):
+
+class Banana(Food):
     """Banana is an item which provides health and stamina regeneration on trigger and scales with other food
 
     Attributes:
         heal: how much healing it provides on trigger
         stamina_regeneration: how much stamina is regenerated on cooldown
-        cooldown: A list of tags of item such as "food" or "bag"
     """
 
-    def __init__(self):
-        banana_data = get_item_data()['items']['Banana']
-        Item.__init__(self, 'Banana', banana_data['tags'])
-        Food.__init__(self)
+    def __init__(self, adjacent_food: int = 1):
+        Food.__init__(self, 'Banana', adjacent_food)
         
-        attributes = banana_data['attributes']
+        attributes = self.item_data['attributes']
         self.heal = attributes['heal']
         self.stamina_regeneration = attributes['stamina_regeneration']
-        self.cooldown = attributes['cooldown']
+        
     
     def get_metrics(self) -> dict[str, float]:
         """
@@ -68,9 +74,30 @@ class Banana(Item, Food):
         stamina = triggers * self.stamina_regeneration   
         metrics['stamina'] = stamina
 
-        return metrics       
+        return metrics
 
-class WoodenSword(Item):
+class Weapon(Item):
+    """ Item Type which deals damage on trigger
+
+    Attributes:
+        minimum_damage: minimum damage dealt on trigger
+        maximum_damage: maximum damage dealt on trigger
+        cooldown: frequency of triggers
+        accuracy: chance to deal damage on trigger
+        stamina_cost: cost of stamina on trigger
+    """
+
+    def __init__(self, name: str):
+        Item.__init__(self, name)
+        
+        attributes = self.item_data['attributes']
+        self.minimum_damage = attributes['minimum_damage']
+        self.maximum_damage = attributes['maximum_damage']
+        self.cooldown = attributes['cooldown']
+        self.accuracy = attributes['accuracy']
+        self.stamina_cost = attributes['stamina_cost']
+
+class WoodenSword(Weapon):
     """WoodenSword is a basic melee weapon
 
     Attributes:
@@ -82,15 +109,7 @@ class WoodenSword(Item):
     """
 
     def __init__(self):
-        sword_data = get_item_data()['items']['Wooden Sword']
-        Item.__init__(self, 'Wooden Sword', sword_data['tags'])
-        
-        attributes = sword_data['attributes']
-        self.minimum_damage = attributes['minimum_damage']
-        self.maximum_damage = attributes['maximum_damage']
-        self.cooldown = attributes['cooldown']
-        self.accuracy = attributes['accuracy']
-        self.stamina_cost = attributes['stamina_cost']
+        Weapon.__init__(self, 'Wooden Sword')
     
     def get_metrics(self) -> dict[str, float]:
         """
@@ -109,7 +128,7 @@ class WoodenSword(Item):
 
         return metrics       
 
-class Pan(Item):
+class Pan(Weapon):
     """Pan is a basic melee weapon scaling with adjacent Food items
 
     Attributes:
@@ -123,17 +142,10 @@ class Pan(Item):
     """
 
     def __init__(self, adjacent_foods = 1):
-        sword_data = get_item_data()['items']['Pan']
-        Item.__init__(self, 'Wooden Sword', sword_data['tags'])
+        Weapon.__init__(self, 'Pan')
         
-        attributes = sword_data['attributes']
-        self.minimum_damage = attributes['minimum_damage']
-        self.maximum_damage = attributes['maximum_damage']
-        self.cooldown = attributes['cooldown']
-        self.accuracy = attributes['accuracy']
-        self.stamina_cost = attributes['stamina_cost']
+        attributes = self.item_data['attributes']
         self.damage_bonus = attributes['damage_bonus']
-        
         self.adjacent_foods = adjacent_foods
     
     def get_metrics(self) -> dict[str, float]:
