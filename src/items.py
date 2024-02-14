@@ -93,6 +93,24 @@ class Garlic(Food):
         self.armor_generation = attributes['armor_generation']
         self.vampirism_removal = attributes['vampirism_removal']
         self.vamprism_removal_chance = attributes['vamprism_removal_chance']
+    
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            armor: total armor item contributes over the combat duration
+            vampirism_removal: total vamirism item removes over the combat duration
+        """
+        cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJECENCY_SCALING)
+        triggers = get_combat_duration() // cooldown
+        metrics = {}
+
+        armor = triggers * self.armor_generation
+        metrics['armor'] = armor
+
+        vampirism_removal = triggers * self.vamprism_removal_chance * self.vampirism_removal
+        metrics['vampirism_removal'] = vampirism_removal
+
+        return metrics
 
 
 class Weapon(Item):
