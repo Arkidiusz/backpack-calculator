@@ -91,3 +91,15 @@ def test_create_pan():
     assert pan.stamina_cost == attributes['stamina_cost']
     assert pan.damage_bonus == attributes['damage_bonus']
     assert pan.adjacent_foods == adjacent_foods
+
+def test_pan_get_metrics():
+    # Arrange
+    adjacent_foods = 2
+
+    # Act
+    pan = Pan(adjacent_foods)
+    metrics = pan.get_metrics()
+
+    # Assert
+    assert metrics['damage'] == 27.5
+    assert metrics['stamina_cost'] == 6.3
