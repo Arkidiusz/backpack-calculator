@@ -94,8 +94,8 @@
       "attributes": {
         "cooldown": 4,
         "armor_generation": 3,
-        "vampirism removal": 1,
-        "vamprism removal chance": 0.3
+        "vampirism_removal": 1,
+        "vamprism_removal_chance": 0.3
       }
     },
     "Healing Herbs" : {
