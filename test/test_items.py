@@ -72,7 +72,7 @@ def test_wooden_sword_get_metrics():
     metrics = sword.get_metrics()
 
     # Assert
-    assert metrics['damage'] == 18.0
+    assert metrics['damage'] == 19.8
     assert metrics['stamina_cost'] == 7.699999999999999
 
 def test_create_pan():
@@ -101,5 +101,5 @@ def test_pan_get_metrics():
     metrics = pan.get_metrics()
 
     # Assert
-    assert metrics['damage'] == 27.5
+    assert metrics['damage'] == 32.725
     assert metrics['stamina_cost'] == 6.3

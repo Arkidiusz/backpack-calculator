@@ -101,7 +101,7 @@ class WoodenSword(Item):
         triggers = get_combat_duration() // self.cooldown
         metrics = {}
 
-        damage = int(triggers * self.accuracy) * (sum([self.minimum_damage, self.maximum_damage]) / 2)
+        damage = triggers * self.accuracy * (sum([self.minimum_damage, self.maximum_damage]) / 2)
         metrics['damage'] = damage 
 
         stamina_cost = triggers * self.stamina_cost
@@ -147,7 +147,7 @@ class Pan(Item):
 
         minimum_damage = self.minimum_damage + self.adjacent_foods * self.damage_bonus
         maximum_damage = self.maximum_damage + self.adjacent_foods * self.damage_bonus
-        damage = int(triggers * self.accuracy) * (sum([minimum_damage, maximum_damage]) / 2)
+        damage = triggers * self.accuracy * (sum([minimum_damage, maximum_damage]) / 2)
         metrics['damage'] = damage 
 
         stamina_cost = triggers * self.stamina_cost
