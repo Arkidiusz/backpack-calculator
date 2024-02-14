@@ -98,8 +98,7 @@ class WoodenSword(Item):
             damage: expected total damage assuming enough stamina
             stamina_cost: expected total stamina cost
         """
-        cooldown = self.cooldown
-        triggers = get_combat_duration() // cooldown
+        triggers = get_combat_duration() // self.cooldown
         print(triggers)
         metrics = {}
 
@@ -144,8 +143,7 @@ class Pan(Item):
             damage: expected total damage assuming enough stamina
             stamina_cost: expected total stamina cost
         """
-        cooldown = self.cooldown
-        triggers = get_combat_duration() // cooldown
+        triggers = get_combat_duration() // self.cooldown
         print(triggers)
         metrics = {}
 
