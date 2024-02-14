@@ -124,7 +124,7 @@ class Pan(Item):
         damage_bonus: how much damage each adhacent food contributes
     """
 
-    def __init__(self):
+    def __init__(self, adjacent_foods = 1):
         sword_data = get_item_data()['items']['Pan']
         Item.__init__(self, 'Wooden Sword', sword_data['tags'])
         
@@ -135,7 +135,8 @@ class Pan(Item):
         self.accuracy = attributes['accuracy']
         self.stamina_cost = attributes['stamina_cost']
         self.damage_bonus = attributes['damage_bonus']
-        self.adjacent_foods = 0
+        
+        self.adjacent_foods = adjacent_foods
     
     def get_metrics(self) -> dict[str, float]:
         """
