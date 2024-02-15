@@ -51,9 +51,9 @@ def test_compute_metrics(backpack, banana, wooden_sword, garlic, stone):
     metrics = backpack.compute_metrics()
 
     # Assert
-    assert metrics['sps'] == 1.01875
+    assert metrics['sps'] == 1.02
     assert metrics['hps'] == 0.75
-    assert metrics['dps'] == 1.359375
+    assert metrics['dps'] == 1.36
     assert metrics['armor'] == 12
     assert metrics['vampirism_removal'] == 1.2
     assert round(metrics['armor_destruction'] , 2) == 1.95

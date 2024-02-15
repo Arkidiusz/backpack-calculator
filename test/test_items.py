@@ -102,7 +102,7 @@ def test_wooden_sword_get_metrics():
 
     # Assert
     assert metrics['damage'] == 19.8
-    assert metrics['stamina_cost'] == 7.699999999999999
+    assert round(metrics['stamina_cost'], 2) == 7.7
 
 def test_create_pan():
     # Arrange

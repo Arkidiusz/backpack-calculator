@@ -82,6 +82,10 @@ class Backpack:
         metrics['dps'] = dps
         metrics['armor_destruction'] = armor_destruction
 
+        # round metrics
+        for name, value in metrics.items():
+            metrics[name] = round(value, 2)
+
         return metrics
 
     def _update_metrics(self, metrics : dict[str, float]) -> None:
