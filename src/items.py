@@ -10,7 +10,7 @@ class Item:
         tags: a list of tags of item such as "food" or "bag"
         cost: an integer cost of an item
     """
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         self.name = name
         
         self.item_data = get_item_data()['items'][name]
@@ -35,7 +35,7 @@ class Food(Item):
     """
     ADJECENCY_SCALING = 0.1
 
-    def __init__(self, name: str, adjacent_food: int = 1):
+    def __init__(self, name: str, adjacent_food: int = 1) -> None:
         Item.__init__(self, name)
         self.adjacent_food = adjacent_food
 
@@ -50,7 +50,7 @@ class Banana(Food):
         stamina_regeneration: how much stamina is regenerated on cooldown
     """
 
-    def __init__(self, adjacent_food: int = 1):
+    def __init__(self, adjacent_food: int = 1) -> None:
         Food.__init__(self, 'Banana', adjacent_food)
         
         attributes = self.item_data['attributes']
@@ -66,12 +66,13 @@ class Banana(Food):
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJECENCY_SCALING)
         triggers = get_combat_duration() // cooldown
-        metrics = {}
 
         healing = triggers * self.heal
-        metrics['healing'] = healing
-
+        
         stamina = triggers * self.stamina_regeneration   
+        
+        metrics = {}
+        metrics['healing'] = healing
         metrics['stamina'] = stamina
 
         return metrics
@@ -86,7 +87,7 @@ class Garlic(Food):
             vamprism_removal_chance: chance to remove vampirism on trigger
     """
 
-    def __init__(self, adjacent_food: int = 1):
+    def __init__(self, adjacent_food: int = 1) -> None:
         Food.__init__(self, 'Garlic', adjacent_food)
         
         attributes = self.item_data['attributes']
@@ -102,12 +103,14 @@ class Garlic(Food):
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJECENCY_SCALING)
         triggers = get_combat_duration() // cooldown
-        metrics = {}
+        
 
         armor = triggers * self.armor_generation
-        metrics['armor'] = armor
 
         vampirism_removal = triggers * self.vamprism_removal_chance * self.vampirism_removal
+        
+        metrics = {}
+        metrics['armor'] = armor
         metrics['vampirism_removal'] = vampirism_removal
 
         return metrics
@@ -124,7 +127,7 @@ class Weapon(Item):
         stamina_cost: cost of stamina on trigger
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         Item.__init__(self, name)
         
         attributes = self.item_data['attributes']
@@ -134,11 +137,12 @@ class Weapon(Item):
         self.accuracy = attributes['accuracy']
         self.stamina_cost = attributes['stamina_cost']
 
+
 class WoodenSword(Weapon):
     """WoodenSword is a basic melee weapon
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         Weapon.__init__(self, 'Wooden Sword')
     
     def get_metrics(self) -> dict[str, float]:
@@ -148,15 +152,18 @@ class WoodenSword(Weapon):
             stamina_cost: expected total stamina cost
         """
         triggers = get_combat_duration() // self.cooldown
-        metrics = {}
+        
 
         damage = triggers * self.accuracy * (sum([self.minimum_damage, self.maximum_damage]) / 2)
-        metrics['damage'] = damage 
-
+        
         stamina_cost = triggers * self.stamina_cost
+        
+        metrics = {}
+        metrics['damage'] = damage 
         metrics['stamina_cost'] = stamina_cost
 
         return metrics       
+
 
 class Pan(Weapon):
     """Pan is a basic melee weapon scaling with adjacent Food items
@@ -166,7 +173,7 @@ class Pan(Weapon):
         damage_bonus: how much damage each adjacent food contributes
     """
 
-    def __init__(self, adjacent_foods = 1):
+    def __init__(self, adjacent_foods: int = 1) -> None:
         Weapon.__init__(self, 'Pan')
         
         attributes = self.item_data['attributes']
@@ -180,15 +187,56 @@ class Pan(Weapon):
             stamina_cost: expected total stamina cost
         """
         triggers = get_combat_duration() // self.cooldown
-        metrics = {}
+        
 
         minimum_damage = self.minimum_damage + self.adjacent_foods * self.damage_bonus
         maximum_damage = self.maximum_damage + self.adjacent_foods * self.damage_bonus
         damage = triggers * self.accuracy * (sum([minimum_damage, maximum_damage]) / 2)
-        metrics['damage'] = damage 
 
         stamina_cost = triggers * self.stamina_cost
+
+        metrics = {}
+        metrics['damage'] = damage 
         metrics['stamina_cost'] = stamina_cost
 
         return metrics
+
+
+class Stone(Weapon):
+    """Stone is a ranged weapon which is triggered once per combat unless bag of marbles is present.
+       In addition, stone provides armor destruction.
+
+    Attributes:
+        armor_destruction: amount of armor removed on hit
+        bag_of_marbles: how much damage each adjacent food contributes
+    """
+
+    def __init__(self, bag_of_marbles: bool = False) -> None:
+        Weapon.__init__(self, 'Stone')
+        self.armor_destruction = self.item_data['attributes']['armor_destruction']
+        self.bag_of_marbles = bag_of_marbles
+    
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            damage: expected total damage assuming enough stamina
+            armor_destruction: expected total armor destruction
+        """
+        if self.bag_of_marbles:
+            triggers = get_combat_duration() // self.cooldown
+        else:
+            triggers = 1
+
+        damage = triggers * self.accuracy * (sum([self.minimum_damage, self.maximum_damage]) / 2)
+        
+        armor_destruction = triggers * self.accuracy * self.armor_destruction
+        
+        stamina_cost = triggers * self.stamina_cost
+        
+        metrics = {}
+        metrics['damage'] = damage
+        metrics['armor_destruction'] = armor_destruction
+        metrics['stamina_cost'] = stamina_cost
+
+        return metrics 
     
