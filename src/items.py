@@ -66,12 +66,13 @@ class Banana(Food):
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJECENCY_SCALING)
         triggers = get_combat_duration() // cooldown
-        metrics = {}
 
         healing = triggers * self.heal
-        metrics['healing'] = healing
-
+        
         stamina = triggers * self.stamina_regeneration   
+        
+        metrics = {}
+        metrics['healing'] = healing
         metrics['stamina'] = stamina
 
         return metrics
@@ -102,12 +103,14 @@ class Garlic(Food):
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJECENCY_SCALING)
         triggers = get_combat_duration() // cooldown
-        metrics = {}
+        
 
         armor = triggers * self.armor_generation
-        metrics['armor'] = armor
 
         vampirism_removal = triggers * self.vamprism_removal_chance * self.vampirism_removal
+        
+        metrics = {}
+        metrics['armor'] = armor
         metrics['vampirism_removal'] = vampirism_removal
 
         return metrics
@@ -149,12 +152,14 @@ class WoodenSword(Weapon):
             stamina_cost: expected total stamina cost
         """
         triggers = get_combat_duration() // self.cooldown
-        metrics = {}
+        
 
         damage = triggers * self.accuracy * (sum([self.minimum_damage, self.maximum_damage]) / 2)
-        metrics['damage'] = damage 
-
+        
         stamina_cost = triggers * self.stamina_cost
+        
+        metrics = {}
+        metrics['damage'] = damage 
         metrics['stamina_cost'] = stamina_cost
 
         return metrics       
@@ -182,14 +187,16 @@ class Pan(Weapon):
             stamina_cost: expected total stamina cost
         """
         triggers = get_combat_duration() // self.cooldown
-        metrics = {}
+        
 
         minimum_damage = self.minimum_damage + self.adjacent_foods * self.damage_bonus
         maximum_damage = self.maximum_damage + self.adjacent_foods * self.damage_bonus
         damage = triggers * self.accuracy * (sum([minimum_damage, maximum_damage]) / 2)
-        metrics['damage'] = damage 
 
         stamina_cost = triggers * self.stamina_cost
+
+        metrics = {}
+        metrics['damage'] = damage 
         metrics['stamina_cost'] = stamina_cost
 
         return metrics
@@ -219,16 +226,16 @@ class Stone(Weapon):
             triggers = get_combat_duration() // self.cooldown
         else:
             triggers = 1
-        
-        metrics = {}
 
         damage = triggers * self.accuracy * (sum([self.minimum_damage, self.maximum_damage]) / 2)
-        metrics['damage'] = damage
         
         armor_destruction = triggers * self.accuracy * self.armor_destruction
-        metrics['armor_destruction'] = armor_destruction
-
+        
         stamina_cost = triggers * self.stamina_cost
+        
+        metrics = {}
+        metrics['damage'] = damage
+        metrics['armor_destruction'] = armor_destruction
         metrics['stamina_cost'] = stamina_cost
 
         return metrics 
