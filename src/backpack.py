@@ -49,6 +49,7 @@ class Backpack:
         damage = 0
         armor = 0
         vampirism_removal = 0
+        armor_destruction = 0
         items = self.items
         if item:
             items += {item : item.get_metrics()}
@@ -67,6 +68,8 @@ class Backpack:
                         armor += metric_value
                     case 'vampirism_removal':
                         vampirism_removal += metric_value
+                    case 'armor_destruction':
+                        armor_destruction += metric_value
                         
         metrics = {}
         metrics['armor'] = armor
@@ -77,6 +80,7 @@ class Backpack:
         if stamina_cost > stamina:
             dps = dps * (stamina / stamina_cost)
         metrics['dps'] = dps
+        metrics['armor_destruction'] = armor_destruction
 
         return metrics
 
