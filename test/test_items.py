@@ -132,3 +132,20 @@ def test_pan_get_metrics():
     # Assert
     assert metrics['damage'] == 32.725
     assert metrics['stamina_cost'] == 6.3
+
+def test_create_Stone():
+    # Arrange
+    attributes = get_item_data()['items']['Stone']['attributes']
+    bag_of_marbles = True
+
+    # Act
+    stone = Stone(bag_of_marbles)
+
+    # Assert
+    assert stone.minimum_damage == attributes['minimum_damage']
+    assert stone.maximum_damage == attributes['maximum_damage']
+    assert stone.cooldown == attributes['cooldown']
+    assert stone.accuracy == attributes['accuracy']
+    assert stone.stamina_cost == attributes['stamina_cost']
+    assert stone.armor_destruction == attributes['armor_destruction']
+    assert stone.bag_of_marbles == bag_of_marbles
