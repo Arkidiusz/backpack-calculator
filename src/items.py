@@ -134,6 +134,7 @@ class Weapon(Item):
         self.accuracy = attributes['accuracy']
         self.stamina_cost = attributes['stamina_cost']
 
+
 class WoodenSword(Weapon):
     """WoodenSword is a basic melee weapon
     """
@@ -158,6 +159,7 @@ class WoodenSword(Weapon):
 
         return metrics       
 
+
 class Pan(Weapon):
     """Pan is a basic melee weapon scaling with adjacent Food items
 
@@ -166,7 +168,7 @@ class Pan(Weapon):
         damage_bonus: how much damage each adjacent food contributes
     """
 
-    def __init__(self, adjacent_foods = 1):
+    def __init__(self, adjacent_foods: int = 1):
         Weapon.__init__(self, 'Pan')
         
         attributes = self.item_data['attributes']
@@ -191,4 +193,43 @@ class Pan(Weapon):
         metrics['stamina_cost'] = stamina_cost
 
         return metrics
+
+
+class Stone(Weapon):
+    """Stone is a ranged weapon which is triggered once per combat unless bag of marbles is present.
+       In addition, stone provides armor destruction.
+
+    Attributes:
+        armor_destruction: amount of armor removed on hit
+        bag_of_marbles: how much damage each adjacent food contributes
+    """
+
+    def __init__(self, bag_of_marbles: bool = False):
+        Weapon.__init__(self, 'Stone')
+        self.armor_destruction = self.item_data['attributes']['armor_destruction']
+        self.bag_of_marbles = bag_of_marbles
+    
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            damage: expected total damage assuming enough stamina
+            armor_destruction: expected total armor destruction
+        """
+        if self.bag_of_marbles:
+            triggers = get_combat_duration() // self.cooldown
+        else:
+            triggers = 1
+        
+        metrics = {}
+
+        damage = triggers * self.accuracy * (sum([self.minimum_damage, self.maximum_damage]) / 2)
+        metrics['damage'] = damage
+        
+        armor_destruction = triggers * self.accuracy * self.armor_destruction
+        metrics['armor_destruction'] = armor_destruction
+
+        stamina_cost = triggers * self.stamina_cost
+        metrics['stamina_cost'] = stamina_cost
+
+        return metrics 
     
