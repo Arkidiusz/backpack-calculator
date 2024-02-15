@@ -10,7 +10,7 @@ class Item:
         tags: a list of tags of item such as "food" or "bag"
         cost: an integer cost of an item
     """
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         self.name = name
         
         self.item_data = get_item_data()['items'][name]
@@ -35,7 +35,7 @@ class Food(Item):
     """
     ADJECENCY_SCALING = 0.1
 
-    def __init__(self, name: str, adjacent_food: int = 1):
+    def __init__(self, name: str, adjacent_food: int = 1) -> None:
         Item.__init__(self, name)
         self.adjacent_food = adjacent_food
 
@@ -50,7 +50,7 @@ class Banana(Food):
         stamina_regeneration: how much stamina is regenerated on cooldown
     """
 
-    def __init__(self, adjacent_food: int = 1):
+    def __init__(self, adjacent_food: int = 1) -> None:
         Food.__init__(self, 'Banana', adjacent_food)
         
         attributes = self.item_data['attributes']
@@ -86,7 +86,7 @@ class Garlic(Food):
             vamprism_removal_chance: chance to remove vampirism on trigger
     """
 
-    def __init__(self, adjacent_food: int = 1):
+    def __init__(self, adjacent_food: int = 1) -> None:
         Food.__init__(self, 'Garlic', adjacent_food)
         
         attributes = self.item_data['attributes']
@@ -124,7 +124,7 @@ class Weapon(Item):
         stamina_cost: cost of stamina on trigger
     """
 
-    def __init__(self, name: str):
+    def __init__(self, name: str) -> None:
         Item.__init__(self, name)
         
         attributes = self.item_data['attributes']
@@ -139,7 +139,7 @@ class WoodenSword(Weapon):
     """WoodenSword is a basic melee weapon
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         Weapon.__init__(self, 'Wooden Sword')
     
     def get_metrics(self) -> dict[str, float]:
@@ -168,7 +168,7 @@ class Pan(Weapon):
         damage_bonus: how much damage each adjacent food contributes
     """
 
-    def __init__(self, adjacent_foods: int = 1):
+    def __init__(self, adjacent_foods: int = 1) -> None:
         Weapon.__init__(self, 'Pan')
         
         attributes = self.item_data['attributes']
@@ -204,7 +204,7 @@ class Stone(Weapon):
         bag_of_marbles: how much damage each adjacent food contributes
     """
 
-    def __init__(self, bag_of_marbles: bool = False):
+    def __init__(self, bag_of_marbles: bool = False) -> None:
         Weapon.__init__(self, 'Stone')
         self.armor_destruction = self.item_data['attributes']['armor_destruction']
         self.bag_of_marbles = bag_of_marbles
