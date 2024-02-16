@@ -262,3 +262,27 @@ class HealingHerbs(Item):
         metrics['regeneration'] = self.regeneration
 
         return metrics
+
+class PocketSand(Item):
+    """PocketSand is an item which applies blind to opponent
+
+    Attributes:
+        blind: how much blind is applied
+    """
+
+    def __init__(self) -> None:
+        Item.__init__(self, 'Pocket Sand')
+        
+        self.blind = self.item_data['attributes']['blind']
+        
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            blind: how much blind is applied
+        """
+        
+        metrics = {}
+        metrics['blind'] = self.blind
+
+        return metrics
+    
