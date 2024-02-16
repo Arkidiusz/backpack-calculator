@@ -180,3 +180,21 @@ def test_healing_herbs_get_metrics():
 
     # Assert
     assert metrics['regeneration'] == 2
+
+def test_create_healing_herbs():
+    # Arrange
+    attributes = get_item_data()['items']['Pocket Sand']['attributes']
+
+    # Act
+    pocket_sand = PocketSand()
+
+    # Assert
+    assert pocket_sand.blind== attributes['blind']
+
+def test_healing_herbs_get_metrics():
+    # Act
+    pocket_sand = PocketSand()
+    metrics = pocket_sand.get_metrics()
+
+    # Assert
+    assert metrics['blind'] == 1
