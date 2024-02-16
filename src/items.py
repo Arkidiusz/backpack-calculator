@@ -247,8 +247,8 @@ class HealingHerbs(Item):
         regeneration: how much passive healing is provided
     """
 
-    def __init__(self, adjacent_food: int = 1) -> None:
-        Food.__init__(self, 'Banana', adjacent_food)
+    def __init__(self) -> None:
+        Item.__init__(self, 'Healing Herbs')
         
         self.regeneration = self.item_data['attributes']['regeneration']
         

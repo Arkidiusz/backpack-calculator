@@ -162,3 +162,21 @@ def test_stone_get_metrics():
     assert round(metrics['damage'] , 2) == 1.95
     assert metrics['stamina_cost'] == 0
     assert round(metrics['armor_destruction'] , 2) == 1.95
+
+def test_create_healing_herbs():
+    # Arrange
+    attributes = get_item_data()['items']['Healing Herbs']['attributes']
+
+    # Act
+    healing_herbs = HealingHerbs()
+
+    # Assert
+    assert healing_herbs.regeneration == attributes['regeneration']
+
+def test_healing_herbs_get_metrics():
+    # Act
+    stone = HealingHerbs()
+    metrics = stone.get_metrics()
+
+    # Assert
+    assert metrics['regeneration'] == 2
