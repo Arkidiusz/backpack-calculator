@@ -62,6 +62,7 @@ def test_compute_metrics(backpack, banana, wooden_sword, garlic, stone, healing_
     assert metrics['armor'] == 12
     assert metrics['vampirism_removal'] == 1.2
     assert round(metrics['armor_destruction'] , 2) == 1.95
+    assert metrics['blind'] == 0
 
 def test_update_metrics(backpack, banana):
     # Act

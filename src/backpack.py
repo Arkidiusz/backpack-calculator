@@ -51,6 +51,7 @@ class Backpack:
         vampirism_removal = 0
         armor_destruction = 0
         regeneration = 0
+        blind = 0
         items = self.items
         if item:
             items += {item : item.get_metrics()}
@@ -73,6 +74,8 @@ class Backpack:
                         armor_destruction += metric_value
                     case 'regeneration':
                         regeneration += metric_value
+                    case 'blind':
+                        blind += metric_value
                         
         metrics = {}
 
@@ -92,6 +95,8 @@ class Backpack:
         metrics['dps'] = dps
 
         metrics['armor_destruction'] = armor_destruction
+
+        metrics['blind'] = blind
 
         # round metrics
         for name, value in metrics.items():
