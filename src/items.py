@@ -239,4 +239,26 @@ class Stone(Weapon):
         metrics['stamina_cost'] = stamina_cost
 
         return metrics 
-    
+
+class HealingHerbs(Item):
+    """HealingHerbs is an item which provides regeneration
+
+    Attributes:
+        regeneration: how much passive healing is provided
+    """
+
+    def __init__(self) -> None:
+        Item.__init__(self, 'Healing Herbs')
+        
+        self.regeneration = self.item_data['attributes']['regeneration']
+        
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            regeneration: how much passive healing is provided
+        """
+        
+        metrics = {}
+        metrics['regeneration'] = self.regeneration
+
+        return metrics
