@@ -50,6 +50,7 @@ class Backpack:
         armor = 0
         vampirism_removal = 0
         armor_destruction = 0
+        regeneration = 0
         items = self.items
         if item:
             items += {item : item.get_metrics()}
@@ -70,16 +71,26 @@ class Backpack:
                         vampirism_removal += metric_value
                     case 'armor_destruction':
                         armor_destruction += metric_value
+                    case 'regeneration':
+                        regeneration += metric_value
                         
         metrics = {}
+
         metrics['armor'] = armor
+
         metrics['vampirism_removal'] = vampirism_removal
+
+        regeneration_triggers = get_combat_duration() // 2
+        healing += regeneration_triggers * regeneration
         metrics['hps'] = healing / get_combat_duration()
+
         metrics['sps'] = self.BASE_STAMINA_GENERATION + (stamina - stamina_cost) / get_combat_duration()
+
         dps = damage / get_combat_duration()
         if stamina_cost > stamina:
             dps = dps * (stamina / stamina_cost)
         metrics['dps'] = dps
+
         metrics['armor_destruction'] = armor_destruction
 
         # round metrics
