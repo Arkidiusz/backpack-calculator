@@ -286,4 +286,19 @@ class PocketSand(Item):
         metrics['blind'] = self.blind
 
         return metrics
-    
+
+class WoodenBuckler(Item):
+    """WoodenBuckler is an item which has a chance to reduce incoming damage and remove stamina
+
+    Attributes:
+        proc_chance: hchance to block incoming attack
+        damage_absorption: how much damage is absorbed on block
+        stamina_removal: how much stamina is removed on block
+    """
+
+    def __init__(self) -> None:
+        Item.__init__(self, 'Wooden Buckler')
+        
+        self.proc_chance = self.item_data['attributes']['proc_chance']
+        self.damage_absorption = self.item_data['attributes']['damage_absorption']
+        self.stamina_removal = self.item_data['attributes']['stamina_removal']
