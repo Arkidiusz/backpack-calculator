@@ -314,6 +314,6 @@ class WoodenBuckler(Item):
 
         metrics = {}
         metrics['damage_absorption'] = damage_absorption
-        metrics['stamina_damage'] = self.stamina_damage
+        metrics['stamina_damage'] = stamina_damage
 
         return metrics
