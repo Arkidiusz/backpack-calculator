@@ -302,3 +302,18 @@ class WoodenBuckler(Item):
         self.proc_chance = self.item_data['attributes']['proc_chance']
         self.damage_absorption = self.item_data['attributes']['damage_absorption']
         self.stamina_removal = self.item_data['attributes']['stamina_removal']
+
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            damage_absorption: how damage is absorbed
+            stamina_damage: how much stamina is removed
+        """
+        damage_absorption = get_expected_hits() * self.proc_chance * self.damage_absorption
+        stamina_damage = get_expected_hits() * self.proc_chance * self.stamina_removal
+
+        metrics = {}
+        metrics['damage_absorption'] = damage_absorption
+        metrics['stamina_damage'] = self.stamina_damage
+
+        return metrics
