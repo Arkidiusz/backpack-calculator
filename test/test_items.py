@@ -198,3 +198,24 @@ def test_healing_herbs_get_metrics():
 
     # Assert
     assert metrics['blind'] == 1
+
+def test_create_wooden_buckler():
+    # Arrange
+    attributes = get_item_data()['items']['Wooden Buckler']['attributes']
+
+    # Act
+    wooden_buckler = WoodenBuckler()
+
+    # Assert
+    assert wooden_buckler.proc_chance == attributes['proc_chance']
+    assert wooden_buckler.damage_absorption== attributes['damage_absorption']
+    assert wooden_buckler.stamina_removal == attributes['stamina_removal']
+
+def test_healing_herbs_get_metrics():
+    # Act
+    wooden_buckler = WoodenBuckler()
+    metrics = wooden_buckler.get_metrics()
+
+    # Assert
+    assert metrics['damage_absorption'] == 14.0
+    assert metrics['stamina_damage'] == 1.05

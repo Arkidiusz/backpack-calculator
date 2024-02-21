@@ -52,6 +52,8 @@ class Backpack:
         armor_destruction = 0
         regeneration = 0
         blind = 0
+        damage_absorption = 0
+        stamina_damage = 0
         items = self.items
         if item:
             items += {item : item.get_metrics()}
@@ -76,6 +78,10 @@ class Backpack:
                         regeneration += metric_value
                     case 'blind':
                         blind += metric_value
+                    case 'damage_absorption':
+                        damage_absorption += metric_value
+                    case 'stamina_damage':
+                        stamina_damage += metric_value
                         
         metrics = {}
 
@@ -97,6 +103,10 @@ class Backpack:
         metrics['armor_destruction'] = armor_destruction
 
         metrics['blind'] = blind
+
+        metrics['damage_absorption'] = damage_absorption
+
+        metrics['stamina_damage'] = stamina_damage
 
         # round metrics
         for name, value in metrics.items():
