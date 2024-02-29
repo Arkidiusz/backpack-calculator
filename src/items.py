@@ -240,6 +240,7 @@ class Stone(Weapon):
 
         return metrics 
 
+
 class HealingHerbs(Item):
     """HealingHerbs is an item which provides regeneration
 
@@ -287,6 +288,7 @@ class PocketSand(Item):
 
         return metrics
 
+
 class WoodenBuckler(Item):
     """WoodenBuckler is an item which has a chance to reduce incoming damage and remove stamina
 
@@ -315,5 +317,30 @@ class WoodenBuckler(Item):
         metrics = {}
         metrics['damage_absorption'] = damage_absorption
         metrics['stamina_damage'] = stamina_damage
+
+        return metrics
+
+
+class WalrusTusk(Item):
+    """WWalrusTusk which provides spikes
+
+    Attributes:
+        spikes: how much spikes this item provides
+    """
+
+    def __init__(self) -> None:
+        Item.__init__(self, 'Walrus Tusk')
+        
+        self.spikes = self.item_data['attributes']['spikes']
+
+    def get_metrics(self) -> dict[str, float]:
+        """
+        Metrics:
+            damage: how damage is dealt
+        """
+        damage = get_expected_hits() * self.spikes
+
+        metrics = {}
+        metrics['damage'] = damage
 
         return metrics
