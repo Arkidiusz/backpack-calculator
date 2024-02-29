@@ -219,3 +219,21 @@ def test_healing_herbs_get_metrics():
     # Assert
     assert metrics['damage_absorption'] == 14.0
     assert metrics['stamina_damage'] == 1.05
+
+def test_create_walrus_tusk():
+    # Arrange
+    attributes = get_item_data()['items']['Walrus Tusk']['attributes']
+
+    # Act
+    walrus_tusk = WalrusTusk()
+
+    # Assert
+    assert walrus_tusk.spikes == attributes['spikes']
+
+def test_walrus_tusk_get_metrics():
+    # Act
+    walrus_tusk = WalrusTusk()
+    metrics = walrus_tusk.get_metrics()
+
+    # Assert
+    assert metrics['damage'] == 10
