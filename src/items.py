@@ -1,4 +1,4 @@
-from src.controller import *
+from src.config import *
 from src.exceptions import BackpackException
 
 class Item:
@@ -322,7 +322,7 @@ class WoodenBuckler(Item):
 
 
 class WalrusTusk(Item):
-    """WWalrusTusk which provides spikes
+    """WalrusTusk which provides spikes
 
     Attributes:
         spikes: how much spikes this item provides

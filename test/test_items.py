@@ -1,5 +1,5 @@
 from src.items import *
-from src.controller import get_item_data
+from src.config import get_item_data
 
 import pytest
 
