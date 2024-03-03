@@ -1,5 +1,5 @@
-from src.config import *
-from src.exceptions import BackpackException
+from .config import *
+from .exceptions import BackpackException
 
 class Item:
     """Item represents all properties of an item used to evaluate its value contribution to a backpack

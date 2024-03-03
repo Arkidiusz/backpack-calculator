@@ -1,4 +1,4 @@
-from src.backpack import Backpack
+from .backpack import Backpack
 
 backpack = Backpack()
 

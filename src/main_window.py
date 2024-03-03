@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QWidget, QLabel
 from PyQt5.QtGui import QGuiApplication
-from src.controller import update_metrics
+from .controller import update_metrics
 
 class MainWindow(QMainWindow):
     def __init__(self):

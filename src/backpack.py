@@ -1,5 +1,5 @@
-from src.items import Item
-from src.config import *
+from .items import Item
+from .config import *
 
 class Backpack:
     """Represents all information in a backpack used to calculate its value
