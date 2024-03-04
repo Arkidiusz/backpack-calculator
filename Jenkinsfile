@@ -24,7 +24,7 @@ pipeline {
                 // Run Python unit tests
                 script {
                     echo "Current Directory: ${pwd()}"
-                    sh '. venv/bin/activate && pytest test'
+                    sh '. venv/bin/activate && python -m pytest'
                 }
             }
         }
