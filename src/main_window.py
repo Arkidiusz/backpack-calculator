@@ -33,11 +33,11 @@ class MainWindow(QMainWindow):
         scroll_area.setWidgetResizable(True)
         scroll_area.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
 
-        self.metrics_grid = QWidget()
-        self.scroll_layout = QGridLayout(self.metrics_grid)
-        self.scroll_layout.setAlignment(Qt.AlignTop)
-        self.metrics_grid.setLayout(self.scroll_layout)
-        scroll_area.setWidget(self.metrics_grid)
+        self.grid_container = QWidget()
+        self.metrics_grid = QGridLayout(self.grid_container)
+        self.metrics_grid.setAlignment(Qt.AlignTop)
+        self.grid_container.setLayout(self.metrics_grid)
+        scroll_area.setWidget(self.grid_container)
 
         layout.addWidget(metrics_label)
         layout.addWidget(scroll_area)
@@ -49,15 +49,15 @@ class MainWindow(QMainWindow):
             metrics: a mapping of metric name to its float value
         """
         # clear the grid
-        for i in reversed(range(self.scroll_layout.count())): 
-            self.scroll_layout.itemAt(i).widget().setParent(None)
+        for i in reversed(range(self.metrics_grid.count())): 
+            self.metrics_grid.itemAt(i).widget().setParent(None)
 
         row = 0
         for metric_name, metric_value in metrics.items():
             metric_name_label = QLabel(f'{metric_name}:')
-            self.scroll_layout.addWidget(metric_name_label, row, 0, alignment=Qt.AlignRight)
+            self.metrics_grid.addWidget(metric_name_label, row, 0, alignment=Qt.AlignRight)
             
             metric_value_label = QLabel(str(metric_value))
-            self.scroll_layout.addWidget(metric_value_label, row, 1)
+            self.metrics_grid.addWidget(metric_value_label, row, 1)
 
             row += 1
