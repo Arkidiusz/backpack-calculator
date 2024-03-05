@@ -11,15 +11,18 @@ import re
 def backpack():
     return Backpack()
 
-@pytest.fixture
-def app():
-    app = QApplication([])
-    yield app
-    app.quit()
+# @pytest.fixture
+# def app(qtbot):
+#     main_window = MainWindow()
+#     qtbot.addWidget(main_window)
+#     app = QApplication([])
+#     yield app
+#     app.quit()
 
-def test_populate_metrics_table(app, backpack):
+def test_populate_metrics_table(backpack, qtbot):
     # Arrange
     window = MainWindow()
+    qtbot.addWidget(window)
     metrics = backpack.compute_metrics()
     
     # Act
