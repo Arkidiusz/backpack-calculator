@@ -24,7 +24,9 @@ pipeline {
                 // Run Python unit tests
                 script {
                     echo "Current Directory: ${pwd()}"
-                    sh '. venv/bin/activate && python -m pytest'
+                    sh 'Xvfb :99 &'
+                    sh 'export DISPLAY=:99'
+                    sh '. venv/bin/activate && python -m pytest --verbose'
                 }
             }
         }
