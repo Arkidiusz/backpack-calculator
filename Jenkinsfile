@@ -23,7 +23,7 @@ pipeline {
             steps {
                 // Run Python unit tests
                 script {
-                    echo "Current Directory: ${pwd()}"
+                    sh 'export QT_QPA_PLATFORM=offscreen'
                     sh 'Xvfb :99 &'
                     sh 'export DISPLAY=:99'
                     sh '. venv/bin/activate && python -m pytest --verbose'
