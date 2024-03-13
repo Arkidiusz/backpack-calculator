@@ -26,9 +26,6 @@ pipeline {
             steps {
                 // Run Python unit tests
                 script {
-                    // sh 'export QT_QPA_PLATFORM=offscreen'
-                    // sh 'Xvfb :99 &'
-                    // sh 'export DISPLAY=:99'
                     bat 'python -m pytest --verbose'
                 }
             }

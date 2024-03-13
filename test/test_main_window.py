@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QApplication
 from src.main_window import *
 from src.backpack import Backpack
 
-
 import re
 
 @pytest.fixture

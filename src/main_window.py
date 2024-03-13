@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
@@ -14,8 +14,12 @@ class MainWindow(QMainWindow):
         screen_resolution = QGuiApplication.primaryScreen().availableGeometry()
         self.setGeometry(0, 0, screen_resolution.width(), screen_resolution.height())
 
-        self.central_widget = QWidget()
-        self.setCentralWidget(self.central_widget)
+        central_widget = QWidget()
+        self.setCentralWidget(central_widget)
+
+        self.central_layout = QHBoxLayout()
+        self.central_layout.setAlignment(Qt.AlignLeft)
+        central_widget.setLayout(self.central_layout)
 
         self._create_metrics_table()
         self.populate_metrics_table(request_metrics_update())
@@ -23,9 +27,11 @@ class MainWindow(QMainWindow):
     def _create_metrics_table(self) -> None:
         """Creates a display column of metrics
         """
+        widget = QWidget()
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
-        self.central_widget.setLayout(layout)
+        widget.setLayout(layout)
+        self.central_layout.addWidget(widget)
         
         metrics_label = QLabel('Metrics:')
 
