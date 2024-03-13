@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'windows'
+    }
 
     stages {
         stage('Checkout') {
@@ -13,8 +15,9 @@ pipeline {
             steps {
                 // Install Python dependencies using a virtual environment
                 script {
-                    sh 'python3 -m venv venv'
-                    sh '. venv/bin/activate && pip install -r requirements.txt'
+                    bat 'python -m venv venv'
+                    bat '.\\venv\\Scripts\\activate'
+                    bat 'pip install -r requirements.txt'
                 }
             }
         }
@@ -23,8 +26,10 @@ pipeline {
             steps {
                 // Run Python unit tests
                 script {
-                    echo "Current Directory: ${pwd()}"
-                    sh '. venv/bin/activate && pytest test'
+                    // sh 'export QT_QPA_PLATFORM=offscreen'
+                    // sh 'Xvfb :99 &'
+                    // sh 'export DISPLAY=:99'
+                    bat 'python -m pytest --verbose'
                 }
             }
         }
