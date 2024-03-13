@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout
+from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout, QPushButton, QDialog
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(self.central_layout)
 
         self._create_metrics_table()
-        self.populate_metrics_table(request_metrics_update())
+        self._create_add_item_button()
     
     def _create_metrics_table(self) -> None:
         """Creates a display column of metrics
@@ -47,6 +47,8 @@ class MainWindow(QMainWindow):
 
         layout.addWidget(metrics_label)
         layout.addWidget(scroll_area)
+
+        self.populate_metrics_table(request_metrics_update())
     
     def populate_metrics_table(self, metrics: dict[str, float]) -> None:
         """Updates the metrics table with provided metrics
@@ -67,3 +69,17 @@ class MainWindow(QMainWindow):
             self.metrics_grid.addWidget(metric_value_label, row, 1)
 
             row += 1
+
+    def _create_add_item_button(self):
+        """ A button for adding new items to the backpack
+        """
+        button = QPushButton("Add Item")
+        button.clicked.connect(self._open_popup)
+        self.central_layout.addWidget(button)   
+    
+    def _open_popup(self):
+        """ A Popup Window enabling item selection
+        """
+        popup = QDialog()
+        popup.setWindowTitle("Add Item")
+        popup.exec_()
