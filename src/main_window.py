@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout, QPushButton, QDialog
+from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout, QPushButton, QDialog, QComboBox
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
@@ -80,6 +80,16 @@ class MainWindow(QMainWindow):
     def _open_popup(self):
         """ A Popup Window enabling item selection
         """
+        layout = QVBoxLayout()
+
         popup = QDialog()
+        popup.setLayout(layout)
         popup.setWindowTitle("Add Item")
+
+        items_combo_box = QComboBox()
+        items_combo_box.addItems(["Item 1", "Item 2"])
+        layout.addWidget(items_combo_box)
+
         popup.exec_()
+
+
