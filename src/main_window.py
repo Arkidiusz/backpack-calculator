@@ -3,6 +3,7 @@ from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
 from .controller import request_metrics_update
+from .config import get_item_names
 
 class MainWindow(QMainWindow):
     """Defines the appearance and elements of the application
@@ -87,9 +88,7 @@ class MainWindow(QMainWindow):
         popup.setWindowTitle("Add Item")
 
         items_combo_box = QComboBox()
-        items_combo_box.addItems(["Item 1", "Item 2"])
+        items_combo_box.addItems(get_item_names())
         layout.addWidget(items_combo_box)
 
         popup.exec_()
-
-
