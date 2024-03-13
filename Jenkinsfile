@@ -29,7 +29,7 @@ pipeline {
                     // sh 'export QT_QPA_PLATFORM=offscreen'
                     // sh 'Xvfb :99 &'
                     // sh 'export DISPLAY=:99'
-                    bat '. venv/bin/activate && python -m pytest --verbose'
+                    bat 'python -m pytest --verbose'
                 }
             }
         }
