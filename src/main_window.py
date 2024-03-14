@@ -9,6 +9,8 @@ class MainWindow(QMainWindow):
     """Defines the appearance and elements of the application
     """
     def __init__(self):
+        """Initialise main window, its central widget, layout and call functions to create all widgets and components of this window
+        """
         super().__init__()
 
         self.setWindowTitle("Backpack Calculator")
@@ -17,7 +19,6 @@ class MainWindow(QMainWindow):
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-
         self.central_layout = QHBoxLayout()
         self.central_layout.setAlignment(Qt.AlignLeft)
         central_widget.setLayout(self.central_layout)
@@ -28,22 +29,22 @@ class MainWindow(QMainWindow):
     def _create_metrics_table(self) -> None:
         """Creates a display column of metrics
         """
-        widget = QWidget()
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignTop)
+        widget = QWidget()
         widget.setLayout(layout)
         self.central_layout.addWidget(widget)
         
         metrics_label = QLabel('Metrics:')
 
-        scroll_area = QScrollArea()
-        scroll_area.setWidgetResizable(True)
-        scroll_area.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-
         self.grid_container = QWidget()
         self.metrics_grid = QGridLayout(self.grid_container)
         self.metrics_grid.setAlignment(Qt.AlignTop)
         self.grid_container.setLayout(self.metrics_grid)
+
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         scroll_area.setWidget(self.grid_container)
 
         layout.addWidget(metrics_label)
@@ -79,29 +80,27 @@ class MainWindow(QMainWindow):
         self.central_layout.addWidget(button)   
     
     def _open_popup(self):
-        """ A Popup Window enabling item selection
+        """ A popup window enabling item selection
         """
-        layout = QVBoxLayout()
-
         popup = QDialog()
-        popup.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
-        
-        popup.setLayout(layout)
         popup.setWindowTitle("Add Item")
+        popup.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        popup.accepted.connect(self._add_item)
+        
+        layout = QVBoxLayout()
+        popup.setLayout(layout)
 
         self.items_combo_box = QComboBox()
         self.items_combo_box.addItems(get_item_names())
-        layout.addWidget(self.items_combo_box)
-
+        
         ok_button = QPushButton("Add Item")
         ok_button.clicked.connect(popup.accept)
-        layout.addWidget(ok_button)
 
-        popup.accepted.connect(self._add_item)
+        layout.addWidget(self.items_combo_box)
+        layout.addWidget(ok_button)
 
         popup.exec_()
     
     def _add_item(self) -> None:
         metrics = add_item(self.items_combo_box.currentText())
         self.populate_metrics_table(metrics)
-

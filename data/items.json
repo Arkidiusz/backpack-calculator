@@ -1,6 +1,6 @@
 {
   "items": {
-    "Banana" : {
+    "Banana": {
       "id": 1,
       "rarity": "Common",
       "cost": 3,
@@ -13,7 +13,7 @@
         "stamina_regeneration": 1
       }
     },
-    "Wooden Sword" : {
+    "Wooden Sword": {
       "id": 2,
       "rarity": "Common",
       "cost": 3,
@@ -28,7 +28,7 @@
         "stamina_cost": 0.7
       }
     },
-    "Stone" : {
+    "Stone": {
       "id": 3,
       "rarity": "Common",
       "cost": 1,
@@ -44,7 +44,7 @@
         "armor_destruction": 3
       }
     },
-    "Pan" : {
+    "Pan": {
       "id": 4,
       "rarity": "Common",
       "cost": 4,
@@ -60,7 +60,7 @@
         "damage_bonus": 1
       }
     },
-    "Wooden Buckler" : {
+    "Wooden Buckler": {
       "id": 5,
       "rarity": "Common",
       "cost": 4,
@@ -73,7 +73,7 @@
         "stamina_removal": 0.3
       }
     },
-    "Lump of Coal" : {
+    "Lump of Coal": {
       "id": 6,
       "rarity": "Common",
       "cost": 2,
@@ -84,7 +84,7 @@
         "cooldown": 3
       }
     },
-    "Garlic" : {
+    "Garlic": {
       "id": 7,
       "rarity": "Common",
       "cost": 2,
@@ -98,7 +98,7 @@
         "vamprism_removal_chance": 0.3
       }
     },
-    "Healing Herbs" : {
+    "Healing Herbs": {
       "id": 8,
       "rarity": "Common",
       "cost": 4,
@@ -109,7 +109,7 @@
         "regeneration": 2
       }
     },
-    "Walrus Tusk" : {
+    "Walrus Tusk": {
       "id": 9,
       "rarity": "Common",
       "cost": 4,
@@ -120,7 +120,7 @@
         "spikes": 1
       }
     },
-    "Piggybank" : {
+    "Piggybank": {
       "id": 10,
       "rarity": "Common",
       "cost": 3,
@@ -132,7 +132,7 @@
         "health": 2
       }
     },
-    "Whetstone" : {
+    "Whetstone": {
       "id": 11,
       "rarity": "Common",
       "cost": 4,
@@ -143,7 +143,7 @@
         "damage_gain": 1
       }
     },
-    "Pocket Sand" : {
+    "Pocket Sand": {
       "id": 12,
       "rarity": "Common",
       "cost": 2,
@@ -154,7 +154,7 @@
         "blind": 1
       }
     },
-    "Leather Bag" : {
+    "Leather Bag": {
       "id": 13,
       "rarity": "Common",
       "cost": 4,
