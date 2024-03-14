@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, 
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
-from .controller import request_metrics_update
+from .controller import request_metrics_update, add_item
 from .config import get_item_names
 
 class MainWindow(QMainWindow):
@@ -89,8 +89,19 @@ class MainWindow(QMainWindow):
         popup.setLayout(layout)
         popup.setWindowTitle("Add Item")
 
-        items_combo_box = QComboBox()
-        items_combo_box.addItems(get_item_names())
-        layout.addWidget(items_combo_box)
+        self.items_combo_box = QComboBox()
+        self.items_combo_box.addItems(get_item_names())
+        layout.addWidget(self.items_combo_box)
+
+        ok_button = QPushButton("Add Item")
+        ok_button.clicked.connect(popup.accept)
+        layout.addWidget(ok_button)
+
+        popup.accepted.connect(self._add_item)
 
         popup.exec_()
+    
+    def _add_item(self) -> None:
+        metrics = add_item(self.items_combo_box.currentText())
+        self.populate_metrics_table(metrics)
+
