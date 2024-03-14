@@ -84,6 +84,8 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout()
 
         popup = QDialog()
+        popup.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        
         popup.setLayout(layout)
         popup.setWindowTitle("Add Item")
 
