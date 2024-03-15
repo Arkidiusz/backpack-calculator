@@ -75,32 +75,40 @@ class MainWindow(QMainWindow):
     def _create_add_item_button(self):
         """ A button for adding new items to the backpack
         """
-        button = QPushButton("Add Item")
-        button.clicked.connect(self._open_popup)
-        self.central_layout.addWidget(button)   
+        self.add_item_button = QPushButton("Add Item")
+        self.add_item_button.clicked.connect(self._open_popup)
+        self.central_layout.addWidget(self.add_item_button)   
     
     def _open_popup(self):
         """ A popup window enabling item selection
         """
-        popup = QDialog()
-        popup.setWindowTitle("Add Item")
-        popup.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
-        popup.accepted.connect(self._add_item)
+        popup = AddItemPopup(self)
+        popup.exec_()
+
+
+class AddItemPopup(QDialog):
+    def __init__(self, main_window: MainWindow):
+        super().__init__()
+        
+        self.main_window = main_window
+        
+        self.setWindowTitle("Add Item")
+        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self.accepted.connect(self._add_item)
         
         layout = QVBoxLayout()
-        popup.setLayout(layout)
+        self.setLayout(layout)
 
         self.items_combo_box = QComboBox()
         self.items_combo_box.addItems(get_item_names())
         
-        ok_button = QPushButton("Add Item")
-        ok_button.clicked.connect(popup.accept)
+        self.ok_button = QPushButton("Add Item")
+        self.ok_button.clicked.connect(self.accept)
 
         layout.addWidget(self.items_combo_box)
-        layout.addWidget(ok_button)
-
-        popup.exec_()
+        layout.addWidget(self.ok_button)
     
     def _add_item(self) -> None:
         metrics = add_item(self.items_combo_box.currentText())
-        self.populate_metrics_table(metrics)
+        self.main_window.populate_metrics_table(metrics)
+        
