@@ -4,6 +4,8 @@ import sys
 
 from .main_window import MainWindow
 
+from .controller import *
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

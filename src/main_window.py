@@ -95,13 +95,16 @@ class MainWindow(QMainWindow):
     def _delete_item(self) -> None:
         """Removes item from back back and calls for update of metrics
         """
-        item_name = self.item_list_widget.selectedItems()[0].text()
-        delete_item(item_name)
-        selected_item = self.item_list_widget.currentItem()
-        if selected_item is not None:
-            self.item_list_widget.takeItem(self.item_list_widget.row(selected_item))
-        self.item_list_widget.removeItemWidget(selected_item)
-        self.populate_metrics_table(request_metrics_update())
+        try:
+            item_name = self.item_list_widget.selectedItems()[0].text()
+            delete_item(item_name)
+            selected_item = self.item_list_widget.currentItem()
+            if selected_item is not None:
+                self.item_list_widget.takeItem(self.item_list_widget.row(selected_item))
+            self.item_list_widget.removeItemWidget(selected_item)
+            self.populate_metrics_table(request_metrics_update())
+        except IndexError as e:
+            pass
         
     def _open_popup(self):
         """ A popup window enabling item selection

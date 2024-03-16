@@ -1,12 +1,29 @@
 from src.items import Banana
-from src.controller import *
+import src.controller as controller
 
 from unittest.mock import MagicMock
 
+import pytest
+
+@pytest.fixture(autouse=True)
+def setup():
+    controller.backpack = controller.Backpack()
+    
 def test_add_item():
     # Act
-    add_item('Banana')
+    controller.add_item('Banana')
 
     # Assert
-    assert len(backpack.items) == 1
-    assert isinstance(list(backpack.items.keys())[0], Banana)
+    assert len(controller.backpack.items) == 1
+    assert isinstance(list(controller.backpack.items.keys())[0], Banana)
+
+def test_delete_item():
+    assert len(controller.backpack.items) == 0
+    # Arrange
+    controller.add_item('Banana')
+
+    # Act
+    controller.delete_item('Banana')
+    
+    # Assert
+    assert len(controller.backpack.items) == 0
