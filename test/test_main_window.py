@@ -18,9 +18,7 @@ def backpack():
 
 @pytest.fixture
 def main_window(qtbot):
-    main_window = MainWindow()
-    qtbot.addWidget(main_window)
-    return main_window
+    return MainWindow()
 
 def test_populate_metrics_table(backpack, main_window):
     # Arrange
@@ -39,12 +37,16 @@ def test_populate_metrics_table(backpack, main_window):
         assert metrics[metric_name] == metric_value
 
 def test_add_item_button_clicked(qtbot):
+    # Arrange
     mock_open_popup = MagicMock()
+    
+    # Act
     with patch('src.main_window.MainWindow._open_popup') as mock_open_popup:
         main_window = MainWindow()
         qtbot.mouseClick(main_window.add_item_button, Qt.LeftButton)
         
-    assert mock_open_popup.assert_called_once
+    # Assert
+    mock_open_popup.assert_called_once()
 
 def test_ok_button_clicked(qtbot):
     # Arrange
@@ -65,12 +67,16 @@ def test_ok_button_clicked(qtbot):
     assert main_window.item_list_widget.count() == 1
 
 def test_items_combo_box(main_window):
+    # Arrange
     add_item_popup = AddItemPopup(main_window)
+    
+    #Assert
     items = get_item_names()
     for i in range(len(items)):
         assert items[i] == add_item_popup.items_combo_box.itemText(i)
     
 def test_delete_item(main_window, qtbot):
+    # Arrange
     add_item_popup = AddItemPopup(main_window)
     add_item_popup._add_item()
     populate_metrics_mock = MagicMock()
@@ -78,8 +84,10 @@ def test_delete_item(main_window, qtbot):
     items = main_window.item_list_widget.findItems("Banana", Qt.MatchFixedString)
     items[0].setSelected(True)
     
+    # Act
     qtbot.mouseClick(main_window.delete_item_button, Qt.LeftButton)
 
+    # Assert
     assert controller.backpack.items == {}
     populate_metrics_mock.assert_called_once()
     
