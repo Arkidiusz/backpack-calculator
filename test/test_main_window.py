@@ -46,18 +46,25 @@ def test_add_item_button_clicked(qtbot):
     assert mock_open_popup.assert_called_once
 
 def test_ok_button_clicked(qtbot):
-    mock_add_item = MagicMock()
+    # Arrange
+    mock_add_items = MagicMock()
     mock_populate_metrics_table = MagicMock()
-    with patch('src.main_window.add_item', autospec = True) as mock_add_item:
+    with patch('src.main_window.add_item', autospec = True) as mock_add_items:
         main_window = MainWindow()
         main_window.populate_metrics_table = mock_populate_metrics_table
         add_item_popup = AddItemPopup(main_window)
-        qtbot.addWidget(main_window)
-        qtbot.addWidget(add_item_popup)
-        
-        
         add_item_popup.items_combo_box.setCurrentText('Wooden Sword')
+        
+        # Act
         qtbot.mouseClick(add_item_popup.ok_button, Qt.LeftButton)
     
-    mock_add_item.assert_called_with('Wooden Sword')
+    # Assert
+    mock_add_items.assert_called_with('Wooden Sword')
     mock_populate_metrics_table.assert_called_once()
+
+def test_items_combo_box(main_window):
+    add_item_popup = AddItemPopup(main_window)
+    items = get_item_names()
+    for i in range(len(items)):
+        assert items[i] == add_item_popup.items_combo_box.itemText(i)
+    

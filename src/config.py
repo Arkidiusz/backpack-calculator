@@ -18,4 +18,4 @@ def get_item_names() -> list[str]:
 
     :return: a list of all possible item names
     """
-    return item_data_file["items"].keys()
+    return list(item_data_file["items"].keys())
