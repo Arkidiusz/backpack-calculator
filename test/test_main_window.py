@@ -1,7 +1,5 @@
 import pytest
 
-import time
-
 from unittest.mock import MagicMock, patch
 
 from src.main_window import *
@@ -9,8 +7,6 @@ from src.backpack import Backpack
 import src.controller as controller
 
 import re
-
-from PyQt5.QtTest import QTest
 
 @pytest.fixture
 def backpack():
