@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout, QPushButton, QDialog, QComboBox
+from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, QWidget, QLabel, QSizePolicy, QGridLayout, QPushButton, QDialog, QComboBox, QListWidget
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
@@ -24,6 +24,7 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(self.central_layout)
 
         self._create_metrics_table()
+        self._create_item_list_widget()
         self._create_add_item_button()
         self._create_delete_item_button()
     
@@ -87,7 +88,17 @@ class MainWindow(QMainWindow):
         self.delete_item_button.clicked.connect(self._delete_item)
         self.central_layout.addWidget(self.delete_item_button)
     
-    def _delete_item(item_name: str) -> None: 
+    def _create_item_list_widget(self):
+        self.item_list_widget = QListWidget()
+        self.item_list_widget.addItem("Item 1")
+        self.central_layout.addWidget(self.item_list_widget)
+    
+    def _delete_item(item_name: str) -> None:
+        """Removes item from back back and calls for update of metrics
+
+        Args:
+            item_name (str): name of item to be deleted
+        """        
         print('delete item')
         
     def _open_popup(self):
@@ -120,6 +131,8 @@ class AddItemPopup(QDialog):
         layout.addWidget(self.ok_button)
     
     def _add_item(self) -> None:
-        metrics = add_item(self.items_combo_box.currentText())
+        item_name = self.items_combo_box.currentText()
+        metrics = add_item(item_name)
+        self.main_window.item_list_widget.addItem(item_name)
         self.main_window.populate_metrics_table(metrics)
         
