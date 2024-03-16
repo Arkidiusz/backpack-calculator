@@ -25,6 +25,7 @@ class MainWindow(QMainWindow):
 
         self._create_metrics_table()
         self._create_add_item_button()
+        self._create_delete_item_button()
     
     def _create_metrics_table(self) -> None:
         """Creates a display column of metrics
@@ -77,8 +78,18 @@ class MainWindow(QMainWindow):
         """
         self.add_item_button = QPushButton("Add Item")
         self.add_item_button.clicked.connect(self._open_popup)
-        self.central_layout.addWidget(self.add_item_button)   
+        self.central_layout.addWidget(self.add_item_button)
     
+    def _create_delete_item_button(self):
+        """ A button for deleting items from the backpack
+        """
+        self.delete_item_button = QPushButton("Delete Item")
+        self.delete_item_button.clicked.connect(self._delete_item)
+        self.central_layout.addWidget(self.delete_item_button)
+    
+    def _delete_item(item_name: str) -> None: 
+        print('delete item')
+        
     def _open_popup(self):
         """ A popup window enabling item selection
         """
