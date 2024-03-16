@@ -104,6 +104,8 @@ class MainWindow(QMainWindow):
             self.item_list_widget.removeItemWidget(selected_item)
             self.populate_metrics_table(request_metrics_update())
         except IndexError as e:
+            # this occurs when there are no items in the list
+            # TODO inform user about this
             pass
         
     def _open_popup(self):

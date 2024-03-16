@@ -6,6 +6,7 @@ from unittest.mock import MagicMock, patch
 
 from src.main_window import *
 from src.backpack import Backpack
+import src.controller as controller
 
 import re
 
@@ -42,6 +43,7 @@ def test_add_item_button_clicked(qtbot):
     with patch('src.main_window.MainWindow._open_popup') as mock_open_popup:
         main_window = MainWindow()
         qtbot.mouseClick(main_window.add_item_button, Qt.LeftButton)
+    # TODO test if items are added to gui
         
     assert mock_open_popup.assert_called_once
 
@@ -67,4 +69,17 @@ def test_items_combo_box(main_window):
     items = get_item_names()
     for i in range(len(items)):
         assert items[i] == add_item_popup.items_combo_box.itemText(i)
+    
+def test_delete_item(main_window, qtbot):
+    add_item_popup = AddItemPopup(main_window)
+    add_item_popup._add_item()
+    populate_metrics_mock = MagicMock()
+    main_window.populate_metrics_table = populate_metrics_mock
+    items = main_window.item_list_widget.findItems("Banana", Qt.MatchFixedString)
+    items[0].setSelected(True)
+    
+    qtbot.mouseClick(main_window.delete_item_button, Qt.LeftButton)
+
+    assert controller.backpack.items == {}
+    populate_metrics_mock.assert_called_once()
     
