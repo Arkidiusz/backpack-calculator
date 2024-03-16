@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, 
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
-from src.controller import add_item, request_metrics_update
+from src.controller import add_item, request_metrics_update, delete_item
 from .config import get_item_names
 
 class MainWindow(QMainWindow):
@@ -90,16 +90,18 @@ class MainWindow(QMainWindow):
     
     def _create_item_list_widget(self):
         self.item_list_widget = QListWidget()
-        self.item_list_widget.addItem("Item 1")
         self.central_layout.addWidget(self.item_list_widget)
     
-    def _delete_item(item_name: str) -> None:
+    def _delete_item(self) -> None:
         """Removes item from back back and calls for update of metrics
-
-        Args:
-            item_name (str): name of item to be deleted
-        """        
-        print('delete item')
+        """
+        item_name = self.item_list_widget.selectedItems()[0].text()
+        delete_item(item_name)
+        selected_item = self.item_list_widget.currentItem()
+        if selected_item is not None:
+            self.item_list_widget.takeItem(self.item_list_widget.row(selected_item))
+        self.item_list_widget.removeItemWidget(selected_item)
+        self.populate_metrics_table(request_metrics_update())
         
     def _open_popup(self):
         """ A popup window enabling item selection

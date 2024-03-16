@@ -34,3 +34,10 @@ def add_item(item_name: str) -> dict[str, float]:
     backpack.items[item] = item.get_metrics()
     metrics = backpack.compute_metrics()
     return metrics
+
+def delete_item(item_name: str) -> None:
+    for item in backpack.items.keys():
+        if item.name == item_name:
+            del backpack.items[item]
+            break
+        
