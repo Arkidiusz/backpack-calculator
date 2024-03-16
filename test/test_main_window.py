@@ -43,7 +43,6 @@ def test_add_item_button_clicked(qtbot):
     with patch('src.main_window.MainWindow._open_popup') as mock_open_popup:
         main_window = MainWindow()
         qtbot.mouseClick(main_window.add_item_button, Qt.LeftButton)
-    # TODO test if items are added to gui
         
     assert mock_open_popup.assert_called_once
 
@@ -63,6 +62,7 @@ def test_ok_button_clicked(qtbot):
     # Assert
     mock_add_items.assert_called_with('Wooden Sword')
     mock_populate_metrics_table.assert_called_once()
+    assert main_window.item_list_widget.count() == 1
 
 def test_items_combo_box(main_window):
     add_item_popup = AddItemPopup(main_window)
