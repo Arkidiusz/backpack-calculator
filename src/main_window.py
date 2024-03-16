@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QScrollArea, QVBoxLayout, QHBoxLayout, 
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
-from .controller import request_metrics_update, add_item
+from src.controller import add_item, request_metrics_update
 from .config import get_item_names
 
 class MainWindow(QMainWindow):

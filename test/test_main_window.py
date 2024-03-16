@@ -37,11 +37,27 @@ def test_populate_metrics_table(backpack, main_window):
         assert f'{metric_name}' in metrics.keys()
         assert metrics[metric_name] == metric_value
 
-def test_add_item_calls_open_popup(qtbot):
+def test_add_item_button_clicked(qtbot):
     mock_open_popup = MagicMock()
     with patch('src.main_window.MainWindow._open_popup') as mock_open_popup:
         main_window = MainWindow()
         qtbot.mouseClick(main_window.add_item_button, Qt.LeftButton)
         
     assert mock_open_popup.assert_called_once
+
+def test_ok_button_clicked(qtbot):
+    mock_add_item = MagicMock()
+    mock_populate_metrics_table = MagicMock()
+    with patch('src.main_window.add_item', autospec = True) as mock_add_item:
+        main_window = MainWindow()
+        main_window.populate_metrics_table = mock_populate_metrics_table
+        add_item_popup = AddItemPopup(main_window)
+        qtbot.addWidget(main_window)
+        qtbot.addWidget(add_item_popup)
         
+        
+        add_item_popup.items_combo_box.setCurrentText('Wooden Sword')
+        qtbot.mouseClick(add_item_popup.ok_button, Qt.LeftButton)
+    
+    mock_add_item.assert_called_with('Wooden Sword')
+    mock_populate_metrics_table.assert_called_once()
