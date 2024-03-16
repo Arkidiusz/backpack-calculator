@@ -4,29 +4,36 @@ from src.items import Banana, WoodenSword, Garlic, Stone, HealingHerbs
 import pytest
 from unittest.mock import MagicMock
 
+
 @pytest.fixture
 def backpack():
     return Backpack()
+
 
 @pytest.fixture
 def banana():
     return Banana()
 
+
 @pytest.fixture
 def wooden_sword():
     return WoodenSword()
+
 
 @pytest.fixture
 def garlic():
     return Garlic()
 
+
 @pytest.fixture
 def stone():
     return Stone()
 
+
 @pytest.fixture
 def healing_herbs():
     return HealingHerbs()
+
 
 def test_update_item_new_item(backpack, banana):
     # Arrange
@@ -42,9 +49,14 @@ def test_update_item_new_item(backpack, banana):
     assert len(backpack.items) == 1
     mock_compute_metrics.assert_called_once()
 
-def test_update_item_existing_item(backpack, banana,):
+
+def test_update_item_existing_item(
+    backpack,
+    banana,
+):
     # TODO implement once updating items is implemented
     pass
+
 
 def test_compute_metrics(backpack, banana, wooden_sword, garlic, stone, healing_herbs):
     # Act
@@ -56,15 +68,16 @@ def test_compute_metrics(backpack, banana, wooden_sword, garlic, stone, healing_
     metrics = backpack.compute_metrics()
 
     # Assert
-    assert metrics['sps'] == 1.02
-    assert metrics['hps'] == 1.75
-    assert metrics['dps'] == 1.36
-    assert metrics['armor'] == 12
-    assert metrics['vampirism_removal'] == 1.2
-    assert round(metrics['armor_destruction'] , 2) == 1.95
-    assert metrics['blind'] == 0
-    assert metrics['damage_absorption'] == 0
-    assert metrics['stamina_damage'] == 0
+    assert metrics["sps"] == 1.02
+    assert metrics["hps"] == 1.75
+    assert metrics["dps"] == 1.36
+    assert metrics["armor"] == 12
+    assert metrics["vampirism_removal"] == 1.2
+    assert round(metrics["armor_destruction"], 2) == 1.95
+    assert metrics["blind"] == 0
+    assert metrics["damage_absorption"] == 0
+    assert metrics["stamina_damage"] == 0
+
 
 def test_update_metrics(backpack, banana):
     # Act
@@ -75,5 +88,5 @@ def test_update_metrics(backpack, banana):
     backpack._update_metrics(metrics)
 
     # Assert
-    backpack.sps == metrics['sps']
-    backpack.hps == metrics['hps']
+    backpack.sps == metrics["sps"]
+    backpack.hps == metrics["hps"]
