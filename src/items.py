@@ -84,7 +84,7 @@ class Garlic(Food):
         Attributes:
             armor_generation: how much armor it provides on trigger
             vampirism_removal: how much vampirism is removed on trigger
-            vamprism_removal_chance: chance to remove vampirism on trigger
+            vampirism_removal_chance: chance to remove vampirism on trigger
     """
 
     def __init__(self, adjacent_food: int = 1) -> None:
@@ -93,7 +93,7 @@ class Garlic(Food):
         attributes = self.item_data['attributes']
         self.armor_generation = attributes['armor_generation']
         self.vampirism_removal = attributes['vampirism_removal']
-        self.vamprism_removal_chance = attributes['vamprism_removal_chance']
+        self.vampirism_removal_chance = attributes['vampirism_removal_chance']
     
     def get_metrics(self) -> dict[str, float]:
         """
@@ -107,7 +107,7 @@ class Garlic(Food):
 
         armor = triggers * self.armor_generation
 
-        vampirism_removal = triggers * self.vamprism_removal_chance * self.vampirism_removal
+        vampirism_removal = triggers * self.vampirism_removal_chance * self.vampirism_removal
         
         metrics = {}
         metrics['armor'] = armor

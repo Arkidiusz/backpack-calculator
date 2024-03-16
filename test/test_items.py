@@ -64,7 +64,7 @@ def test_create_garlic():
     # Assert
     garlic.armor_generation = attributes['armor_generation']
     garlic.vampirism_removal = attributes['vampirism_removal']
-    garlic.vamprism_removal_chance = attributes['vamprism_removal_chance']
+    garlic.vampirism_removal_chance = attributes['vampirism_removal_chance']
 
 def test_garlic_get_metrics():
     # Arrange
