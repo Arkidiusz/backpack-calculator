@@ -97,3 +97,17 @@ def test_delete_item(main_window, qtbot):
     # Assert
     assert controller.backpack.items == {}
     populate_metrics_mock.assert_called_once()
+
+def test_click_combat_duration_spinner(qtbot):
+    # Arrange
+    combat_duration = controller.get_combat_duration() + 1
+    with patch("src.main_window.MainWindow._update_combat_duration", autospec=False) as mock_update_combat_duration:
+        main_window = MainWindow()
+        spinner = main_window.combat_duration_spinner
+        
+        # Act
+        spinner.setValue(combat_duration)
+        
+    # Assert
+    assert spinner.value() == combat_duration
+    mock_update_combat_duration.assert_called_with(combat_duration)
