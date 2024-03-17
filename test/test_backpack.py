@@ -4,6 +4,8 @@ from src.items import Banana, WoodenSword, Garlic, Stone, HealingHerbs
 import pytest
 from unittest.mock import MagicMock
 
+import src.config as config
+
 
 @pytest.fixture
 def backpack():
@@ -90,3 +92,21 @@ def test_update_metrics(backpack, banana):
     # Assert
     backpack.sps == metrics["sps"]
     backpack.hps == metrics["hps"]
+
+
+def test_update_items(backpack, banana):
+    # Arrange
+    backpack.update_item(banana)
+    mock_get_metrics = MagicMock()
+    mock_get_metrics.return_value = {"metric1": 20.0}
+    banana.get_metrics = mock_get_metrics
+    items = backpack.items
+    metrics = backpack.metrics
+
+    # Act
+    backpack.update_items()
+
+    # Assert
+    mock_get_metrics.assert_called_once()
+    assert backpack.items[banana] == mock_get_metrics.return_value
+    assert backpack.metrics[banana] == mock_get_metrics.return_value

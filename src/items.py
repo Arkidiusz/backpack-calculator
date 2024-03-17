@@ -68,7 +68,6 @@ class Banana(Food):
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJACENCY_SCALING)
         triggers = get_combat_duration() // cooldown
-
         healing = triggers * self.heal
 
         stamina = triggers * self.stamina_regeneration
