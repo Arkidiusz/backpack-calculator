@@ -72,7 +72,6 @@ class Backpack:
                     case "stamina":
                         stamina += metric_value
                     case "healing":
-                        print(f'healing += {metric_value}')
                         healing += metric_value
                     case "stamina_cost":
                         stamina_cost += metric_value
@@ -101,9 +100,7 @@ class Backpack:
 
         regeneration_triggers = get_combat_duration() // 2
         healing += regeneration_triggers * regeneration
-        print(f'healing = {healing}')
         metrics["hps"] = healing / get_combat_duration()
-        print(f'hps = {metrics["hps"]}')
 
         metrics["sps"] = (
             self.BASE_STAMINA_GENERATION
