@@ -3,6 +3,16 @@ from src.config import get_item_data
 
 import pytest
 
+import src.config as config
+
+
+@pytest.fixture(autouse=True)
+def setup():
+    """This ensures a clean controller and config for each test case"""
+    config.combat_duration = 16
+    # TODO remove after refactoring config
+
+
 
 @pytest.fixture
 def item_name():
