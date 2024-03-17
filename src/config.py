@@ -20,7 +20,7 @@ def get_expected_hits():
 def get_item_data():
     # TODO refactor to fetch variable directly
     return item_data_file
-
+    
 
 def get_item_names() -> list[str]:
     """Identifies all item names from the json file

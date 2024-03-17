@@ -34,6 +34,12 @@ class Backpack:
         backpack_metrics = self.compute_metrics()
         self._update_metrics(backpack_metrics)
 
+    def update_items(self) -> None:
+        """Updates metrics of all items"""
+
+        for item in self.items:
+            self.metrics[item] = item.get_metrics()
+
     def compute_metrics(self, item: Item = None) -> dict[str, float]:
         """Computes all metrics in the backpack
 
@@ -123,7 +129,7 @@ class Backpack:
 
         Args:
             metrics (dict[str, float]): dictionary of metric name and its value
-        """        
+        """
 
         self.sps = metrics["sps"]
         self.hps = metrics["hps"]

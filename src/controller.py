@@ -1,4 +1,5 @@
 from .backpack import Backpack
+import src.config as config
 from .items import *
 
 backpack = Backpack()
@@ -56,3 +57,17 @@ def delete_item(item_name: str) -> None:
         if item.name == item_name:
             del backpack.items[item]
             break
+
+
+def set_combat_duration(combat_duration: int) -> dict[str, float]:
+    """Sets combat_duration and notifies backpack to provide updates
+
+    Args:
+        combat_duration (int): duration of the combat
+
+    Returns:
+        dict[str, float]: returns a set of updated metrics
+    """
+    config.combat_duration = combat_duration
+    backpack.update_items()
+    return request_metrics_update()
