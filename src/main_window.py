@@ -11,12 +11,13 @@ from PyQt5.QtWidgets import (
     QDialog,
     QComboBox,
     QListWidget,
+    QSpinBox
 )
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
-from src.controller import add_item, request_metrics_update, delete_item
-from .config import get_item_names
+from src.controller import add_item, request_metrics_update, delete_item, set_combat_duration
+import src.config as config
 
 
 class MainWindow(QMainWindow):
@@ -40,6 +41,7 @@ class MainWindow(QMainWindow):
         self._create_item_list_widget()
         self._create_add_item_button()
         self._create_delete_item_button()
+        self._create_combat_duration_widget()
 
     def _create_metrics_table(self) -> None:
         """Creates a display column of metrics"""
@@ -104,6 +106,29 @@ class MainWindow(QMainWindow):
         """This is responsible for displaying a selectable list of items in the Backpack"""
         self.item_list_widget = QListWidget()
         self.central_layout.addWidget(self.item_list_widget)
+    
+    def _create_combat_duration_widget(self) -> None:
+        """A part of ui which displays a combat_duration value with its label and spinner
+        """
+        label = QLabel('Combat Duration (s):')
+        
+        self.combat_duration_spinner = QSpinBox()
+        self.combat_duration_spinner.setValue(config.combat_duration)
+        self.combat_duration_spinner.setMinimum(1)
+        self.combat_duration_spinner.setMaximum(999)
+        self.combat_duration_spinner.valueChanged.connect(self._update_combat_duration)
+        
+        layout = QHBoxLayout()
+        widget = QWidget()
+        widget.setLayout(layout)
+        layout.addWidget(label)
+        layout.addWidget(self.combat_duration_spinner)
+        
+        self.central_layout.addWidget(widget)
+    
+    def _update_combat_duration(self, value: int) -> None:
+        metrics = set_combat_duration(value)
+        self.populate_metrics_table(metrics)
 
     def _delete_item(self) -> None:
         """Removes item from back back and calls for update of metrics"""
@@ -124,6 +149,7 @@ class MainWindow(QMainWindow):
         """A popup window enabling item selection"""
         popup = AddItemPopup(self)
         popup.exec_()
+        
 
 
 class AddItemPopup(QDialog):
@@ -142,7 +168,7 @@ class AddItemPopup(QDialog):
         self.setLayout(layout)
 
         self.items_combo_box = QComboBox()
-        self.items_combo_box.addItems(get_item_names())
+        self.items_combo_box.addItems(config.get_item_names())
 
         self.ok_button = QPushButton("Add Item")
         self.ok_button.clicked.connect(self.accept)

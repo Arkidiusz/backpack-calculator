@@ -18,8 +18,8 @@ class Backpack:
 
     def __init__(self):
         self.items = {}
-        metrics = self.compute_metrics()
-        self._update_metrics(metrics)
+        self.metrics = self.compute_metrics()
+        self._update_metrics(self.metrics)
 
     def update_item(self, item: Item) -> None:
         """Updates item metrics/adds a new item to items list and recomputes Backpack metrics
@@ -38,7 +38,9 @@ class Backpack:
         """Updates metrics of all items"""
 
         for item in self.items:
-            self.metrics[item] = item.get_metrics()
+            metrics = item.get_metrics()
+            self.items[item] = metrics
+            self.metrics[item] = metrics
 
     def compute_metrics(self, item: Item = None) -> dict[str, float]:
         """Computes all metrics in the backpack
@@ -70,6 +72,7 @@ class Backpack:
                     case "stamina":
                         stamina += metric_value
                     case "healing":
+                        print(f'healing += {metric_value}')
                         healing += metric_value
                     case "stamina_cost":
                         stamina_cost += metric_value
@@ -98,7 +101,9 @@ class Backpack:
 
         regeneration_triggers = get_combat_duration() // 2
         healing += regeneration_triggers * regeneration
+        print(f'healing = {healing}')
         metrics["hps"] = healing / get_combat_duration()
+        print(f'hps = {metrics["hps"]}')
 
         metrics["sps"] = (
             self.BASE_STAMINA_GENERATION

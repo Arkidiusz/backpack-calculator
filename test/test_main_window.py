@@ -77,7 +77,7 @@ def test_items_combo_box(main_window):
     add_item_popup = AddItemPopup(main_window)
 
     # Assert
-    items = get_item_names()
+    items = controller.get_item_names()
     for i in range(len(items)):
         assert items[i] == add_item_popup.items_combo_box.itemText(i)
 

@@ -68,6 +68,7 @@ class Banana(Food):
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJACENCY_SCALING)
         triggers = get_combat_duration() // cooldown
+        print(f'triggers={triggers}')
 
         healing = triggers * self.heal
 
@@ -75,6 +76,7 @@ class Banana(Food):
 
         metrics = {}
         metrics["healing"] = healing
+        print(f'healing={healing}')
         metrics["stamina"] = stamina
 
         return metrics
