@@ -37,7 +37,7 @@ def test_delete_item():
 
 def test_set_combat_duration():
     # Arrange
-    combat_duration = config.get_combat_duration() * 2
+    combat_duration = controller.combat_duration * 2
     previous_metrics = controller.request_metrics_update()
 
     # Act

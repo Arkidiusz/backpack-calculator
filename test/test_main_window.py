@@ -62,7 +62,7 @@ def test_ok_button_clicked(qtbot):
     # Arrange
     mock_add_items = MagicMock()
     mock_populate_metrics_table = MagicMock()
-    with patch("src.main_window.add_item", autospec=True) as mock_add_items:
+    with patch("src.main_window.controller.add_item", autospec=True) as mock_add_items:
         main_window = MainWindow()
         main_window.populate_metrics_table = mock_populate_metrics_table
         add_item_popup = AddItemPopup(main_window)
@@ -122,7 +122,7 @@ def test_click_combat_duration_spinner(qtbot, combat_duration):
 
 
 @patch("src.main_window.MainWindow.populate_metrics_table")
-@patch("src.main_window.set_combat_duration")
+@patch("src.main_window.controller.set_combat_duration")
 def test_update_combat_duration(
     set_combat_duration_mock, populate_metrics_table_mock, combat_duration
 ):

@@ -11,13 +11,12 @@ from PyQt5.QtWidgets import (
     QDialog,
     QComboBox,
     QListWidget,
-    QSpinBox
+    QSpinBox,
 )
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtCore import Qt
 
-from src.controller import add_item, request_metrics_update, delete_item, set_combat_duration
-import src.config as config
+import src.controller as controller
 
 
 class MainWindow(QMainWindow):
@@ -66,7 +65,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(metrics_label)
         layout.addWidget(scroll_area)
 
-        self.populate_metrics_table(request_metrics_update())
+        self.populate_metrics_table(controller.request_metrics_update())
 
     def populate_metrics_table(self, metrics: dict[str, float]) -> None:
         """Updates the metrics table with the provided metrics
@@ -106,40 +105,39 @@ class MainWindow(QMainWindow):
         """This is responsible for displaying a selectable list of items in the Backpack"""
         self.item_list_widget = QListWidget()
         self.central_layout.addWidget(self.item_list_widget)
-    
+
     def _create_combat_duration_widget(self) -> None:
-        """A part of ui which displays a combat_duration value with its label and spinner
-        """
-        label = QLabel('Combat Duration (s):')
-        
+        """A part of ui which displays a combat_duration value with its label and spinner"""
+        label = QLabel("Combat Duration (s):")
+
         self.combat_duration_spinner = QSpinBox()
-        self.combat_duration_spinner.setValue(config.combat_duration)
+        self.combat_duration_spinner.setValue(controller.get_combat_duration())
         self.combat_duration_spinner.setMinimum(1)
         self.combat_duration_spinner.setMaximum(999)
         self.combat_duration_spinner.valueChanged.connect(self._update_combat_duration)
-        
+
         layout = QHBoxLayout()
         widget = QWidget()
         widget.setLayout(layout)
         layout.addWidget(label)
         layout.addWidget(self.combat_duration_spinner)
-        
+
         self.central_layout.addWidget(widget)
-    
+
     def _update_combat_duration(self, value: int) -> None:
-        metrics = set_combat_duration(value)
+        metrics = controller.set_combat_duration(value)
         self.populate_metrics_table(metrics)
 
     def _delete_item(self) -> None:
         """Removes item from back back and calls for update of metrics"""
         try:
             item_name = self.item_list_widget.selectedItems()[0].text()
-            delete_item(item_name)
+            controller.delete_item(item_name)
             selected_item = self.item_list_widget.currentItem()
             if selected_item is not None:
                 self.item_list_widget.takeItem(self.item_list_widget.row(selected_item))
             self.item_list_widget.removeItemWidget(selected_item)
-            self.populate_metrics_table(request_metrics_update())
+            self.populate_metrics_table(controller.request_metrics_update())
         except IndexError as e:
             # this occurs when there are no items in the list
             # TODO inform user about this
@@ -149,7 +147,6 @@ class MainWindow(QMainWindow):
         """A popup window enabling item selection"""
         popup = AddItemPopup(self)
         popup.exec_()
-        
 
 
 class AddItemPopup(QDialog):
@@ -168,7 +165,7 @@ class AddItemPopup(QDialog):
         self.setLayout(layout)
 
         self.items_combo_box = QComboBox()
-        self.items_combo_box.addItems(config.get_item_names())
+        self.items_combo_box.addItems(controller.get_item_names())
 
         self.ok_button = QPushButton("Add Item")
         self.ok_button.clicked.connect(self.accept)
@@ -179,6 +176,6 @@ class AddItemPopup(QDialog):
     def _add_item(self) -> None:
         """Adds item to the backpack and updates GUI accordingly"""
         item_name = self.items_combo_box.currentText()
-        metrics = add_item(item_name)
+        metrics = controller.add_item(item_name)
         self.main_window.item_list_widget.addItem(item_name)
         self.main_window.populate_metrics_table(metrics)

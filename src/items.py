@@ -15,7 +15,7 @@ class Item:
     def __init__(self, name: str):
         self.name = name
 
-        self.item_data = get_item_data()["items"][name]
+        self.item_data = item_data[name]
         self.tags = self.item_data["tags"]
         self.cost = self.item_data["cost"]
 
@@ -67,7 +67,7 @@ class Banana(Food):
             stamina: total stamina item restores in combat (assuming dictionary is not capped)
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJACENCY_SCALING)
-        triggers = get_combat_duration() // cooldown
+        triggers = combat_duration // cooldown
         healing = triggers * self.heal
 
         stamina = triggers * self.stamina_regeneration
@@ -103,7 +103,7 @@ class Garlic(Food):
             vampirism_removal: total vampirism item removes over the combat duration
         """
         cooldown = self.cooldown * (1 - self.adjacent_food * self.ADJACENCY_SCALING)
-        triggers = get_combat_duration() // cooldown
+        triggers = combat_duration // cooldown
 
         armor = triggers * self.armor_generation
 
@@ -152,7 +152,7 @@ class WoodenSword(Weapon):
             damage: expected total damage assuming enough stamina
             stamina_cost: expected total stamina cost
         """
-        triggers = get_combat_duration() // self.cooldown
+        triggers = combat_duration // self.cooldown
 
         damage = (
             triggers
@@ -190,7 +190,7 @@ class Pan(Weapon):
             damage: expected total damage assuming enough stamina
             stamina_cost: expected total stamina cost
         """
-        triggers = get_combat_duration() // self.cooldown
+        triggers = combat_duration // self.cooldown
 
         minimum_damage = self.minimum_damage + self.adjacent_foods * self.damage_bonus
         maximum_damage = self.maximum_damage + self.adjacent_foods * self.damage_bonus
@@ -226,7 +226,7 @@ class Stone(Weapon):
             armor_destruction: expected total armor destruction
         """
         if self.bag_of_marbles:
-            triggers = get_combat_duration() // self.cooldown
+            triggers = combat_duration // self.cooldown
         else:
             triggers = 1
 
@@ -318,10 +318,8 @@ class WoodenBuckler(Item):
             damage_absorption: how damage is absorbed
             stamina_damage: how much stamina is removed
         """
-        damage_absorption = (
-            get_expected_hits() * self.proc_chance * self.damage_absorption
-        )
-        stamina_damage = get_expected_hits() * self.proc_chance * self.stamina_removal
+        damage_absorption = expected_hits * self.proc_chance * self.damage_absorption
+        stamina_damage = expected_hits * self.proc_chance * self.stamina_removal
 
         metrics = {}
         metrics["damage_absorption"] = damage_absorption
@@ -347,7 +345,7 @@ class WalrusTusk(Item):
         Metrics:
             damage: how damage is dealt
         """
-        damage = get_expected_hits() * self.spikes
+        damage = expected_hits * self.spikes
 
         metrics = {}
         metrics["damage"] = damage

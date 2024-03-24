@@ -1,5 +1,5 @@
 from src.items import *
-from src.config import get_item_data
+import src.config as config
 
 import pytest
 
@@ -11,7 +11,6 @@ def setup():
     """This ensures a clean controller and config for each test case"""
     config.combat_duration = 16
     # TODO remove after refactoring config
-
 
 
 @pytest.fixture
@@ -48,7 +47,7 @@ def test_get_metrics_raises(item_name):
 
 def test_create_banana():
     # Arrange
-    attributes = get_item_data()["items"]["Banana"]["attributes"]
+    attributes = config.item_data["Banana"]["attributes"]
 
     # Act
     banana = Banana()
@@ -61,7 +60,7 @@ def test_create_banana():
 
 def test_banana_get_metrics():
     # Arrange
-    attributes = get_item_data()["items"]["Banana"]["attributes"]
+    attributes = config.item_data["Banana"]["attributes"]
 
     # Act
     banana = Banana()
@@ -74,7 +73,7 @@ def test_banana_get_metrics():
 
 def test_create_garlic():
     # Arrange
-    attributes = get_item_data()["items"]["Garlic"]["attributes"]
+    attributes = config.item_data["Garlic"]["attributes"]
 
     # Act
     garlic = Garlic()
@@ -87,7 +86,7 @@ def test_create_garlic():
 
 def test_garlic_get_metrics():
     # Arrange
-    attributes = get_item_data()["items"]["Garlic"]["attributes"]
+    attributes = config.item_data["Garlic"]["attributes"]
 
     # Act
     garlic = Garlic()
@@ -100,7 +99,7 @@ def test_garlic_get_metrics():
 
 def test_create_wooden_sword():
     # Arrange
-    attributes = get_item_data()["items"]["Wooden Sword"]["attributes"]
+    attributes = config.item_data["Wooden Sword"]["attributes"]
 
     # Act
     sword = WoodenSword()
@@ -115,7 +114,7 @@ def test_create_wooden_sword():
 
 def test_wooden_sword_get_metrics():
     # Arrange
-    attributes = get_item_data()["items"]["Wooden Sword"]["attributes"]
+    attributes = config.item_data["Wooden Sword"]["attributes"]
 
     # Act
     sword = WoodenSword()
@@ -128,7 +127,7 @@ def test_wooden_sword_get_metrics():
 
 def test_create_pan():
     # Arrange
-    attributes = get_item_data()["items"]["Pan"]["attributes"]
+    attributes = config.item_data["Pan"]["attributes"]
     adjacent_foods = 4
 
     # Act
@@ -159,7 +158,7 @@ def test_pan_get_metrics():
 
 def test_create_stone():
     # Arrange
-    attributes = get_item_data()["items"]["Stone"]["attributes"]
+    attributes = config.item_data["Stone"]["attributes"]
     bag_of_marbles = True
 
     # Act
@@ -191,7 +190,7 @@ def test_stone_get_metrics():
 
 def test_create_healing_herbs():
     # Arrange
-    attributes = get_item_data()["items"]["Healing Herbs"]["attributes"]
+    attributes = config.item_data["Healing Herbs"]["attributes"]
 
     # Act
     healing_herbs = HealingHerbs()
@@ -211,7 +210,7 @@ def test_healing_herbs_get_metrics():
 
 def test_create_healing_herbs():
     # Arrange
-    attributes = get_item_data()["items"]["Pocket Sand"]["attributes"]
+    attributes = config.item_data["Pocket Sand"]["attributes"]
 
     # Act
     pocket_sand = PocketSand()
@@ -231,7 +230,7 @@ def test_healing_herbs_get_metrics():
 
 def test_create_wooden_buckler():
     # Arrange
-    attributes = get_item_data()["items"]["Wooden Buckler"]["attributes"]
+    attributes = config.item_data["Wooden Buckler"]["attributes"]
 
     # Act
     wooden_buckler = WoodenBuckler()
@@ -254,7 +253,7 @@ def test_healing_herbs_get_metrics():
 
 def test_create_walrus_tusk():
     # Arrange
-    attributes = get_item_data()["items"]["Walrus Tusk"]["attributes"]
+    attributes = config.item_data["Walrus Tusk"]["attributes"]
 
     # Act
     walrus_tusk = WalrusTusk()
