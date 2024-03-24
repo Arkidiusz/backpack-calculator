@@ -1,5 +1,5 @@
 from .items import Item
-from .config import *
+import src.config as config
 
 
 class Backpack:
@@ -98,16 +98,16 @@ class Backpack:
 
         metrics["vampirism_removal"] = vampirism_removal
 
-        regeneration_triggers = get_combat_duration() // 2
+        regeneration_triggers = config.combat_duration // 2
         healing += regeneration_triggers * regeneration
-        metrics["hps"] = healing / get_combat_duration()
+        metrics["hps"] = healing / config.combat_duration
 
         metrics["sps"] = (
             self.BASE_STAMINA_GENERATION
-            + (stamina - stamina_cost) / get_combat_duration()
+            + (stamina - stamina_cost) / config.combat_duration
         )
 
-        dps = damage / get_combat_duration()
+        dps = damage / config.combat_duration
         if stamina_cost > stamina:
             dps = dps * (stamina / stamina_cost)
         metrics["dps"] = dps

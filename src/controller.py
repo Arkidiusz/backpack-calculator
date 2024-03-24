@@ -51,7 +51,7 @@ def delete_item(item_name: str) -> None:
     """Removes an item from the backpack based on its name
 
     Args:
-        item_name (str): _description_
+        item_name (str): name identifying item
     """
     for item in backpack.items.keys():
         if item.name == item_name:
@@ -71,3 +71,12 @@ def set_combat_duration(combat_duration: int) -> dict[str, float]:
     config.combat_duration = combat_duration
     backpack.update_items()
     return request_metrics_update()
+
+
+def get_combat_duration() -> int:
+    """Returns combat duration
+
+    Returns:
+        int: combat duration
+    """
+    return combat_duration
